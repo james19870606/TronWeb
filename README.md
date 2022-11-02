@@ -14,7 +14,7 @@ For more specific usage, please refer to the [demo](https://github.com/james1987
 ###  CocoaPods
 
 ```ruby
-pod 'TronWeb', '~> 1.0.6'
+pod 'TronWeb', '~> 1.1.0'
 ```
 
 ### Example usage
