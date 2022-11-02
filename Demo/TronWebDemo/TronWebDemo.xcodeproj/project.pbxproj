@@ -1,0 +1,459 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0BDB4BB8BAE992315B29EE38 /* Pods_TronWebDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B6040A00D457D5064447BB /* Pods_TronWebDemo.framework */; };
+		EF39E76828C326AE005CD817 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF39E76728C326AE005CD817 /* AppDelegate.swift */; };
+		EF39E76A28C326AE005CD817 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF39E76928C326AE005CD817 /* SceneDelegate.swift */; };
+		EF39E76F28C326AE005CD817 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF39E76D28C326AE005CD817 /* Main.storyboard */; };
+		EF39E77128C326B0005CD817 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF39E77028C326B0005CD817 /* Assets.xcassets */; };
+		EF39E77428C326B0005CD817 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF39E77228C326B0005CD817 /* LaunchScreen.storyboard */; };
+		EF756E3128C4BB71001CBCFC /* GetAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF756E2B28C4BB71001CBCFC /* GetAccountViewController.swift */; };
+		EF756E3228C4BB71001CBCFC /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF756E2C28C4BB71001CBCFC /* Utils.swift */; };
+		EF756E3328C4BB71001CBCFC /* GetBalanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF756E2D28C4BB71001CBCFC /* GetBalanceViewController.swift */; };
+		EF756E3428C4BB71001CBCFC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF756E2E28C4BB71001CBCFC /* HomeViewController.swift */; };
+		EF756E3528C4BB71001CBCFC /* TransferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF756E2F28C4BB71001CBCFC /* TransferViewController.swift */; };
+		EF756E3628C4BB71001CBCFC /* ResetTronWebPrivateKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF756E3028C4BB71001CBCFC /* ResetTronWebPrivateKeyViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		84730152913928A9A721AFB3 /* Pods-TronWebDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TronWebDemo.release.xcconfig"; path = "Target Support Files/Pods-TronWebDemo/Pods-TronWebDemo.release.xcconfig"; sourceTree = "<group>"; };
+		88B6040A00D457D5064447BB /* Pods_TronWebDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TronWebDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF39E76428C326AE005CD817 /* TronWebDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TronWebDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF39E76728C326AE005CD817 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EF39E76928C326AE005CD817 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		EF39E76E28C326AE005CD817 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		EF39E77028C326B0005CD817 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EF39E77328C326B0005CD817 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		EF39E77528C326B0005CD817 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF756E2B28C4BB71001CBCFC /* GetAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAccountViewController.swift; sourceTree = "<group>"; };
+		EF756E2C28C4BB71001CBCFC /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		EF756E2D28C4BB71001CBCFC /* GetBalanceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetBalanceViewController.swift; sourceTree = "<group>"; };
+		EF756E2E28C4BB71001CBCFC /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		EF756E2F28C4BB71001CBCFC /* TransferViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferViewController.swift; sourceTree = "<group>"; };
+		EF756E3028C4BB71001CBCFC /* ResetTronWebPrivateKeyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetTronWebPrivateKeyViewController.swift; sourceTree = "<group>"; };
+		F9FC7C20A4E7A1FBB82E2919 /* Pods-TronWebDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TronWebDemo.debug.xcconfig"; path = "Target Support Files/Pods-TronWebDemo/Pods-TronWebDemo.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EF39E76128C326AE005CD817 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0BDB4BB8BAE992315B29EE38 /* Pods_TronWebDemo.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		68BC2BB8786FE67745EAE919 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				88B6040A00D457D5064447BB /* Pods_TronWebDemo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CF1C4B95A2D4C7163493CB07 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F9FC7C20A4E7A1FBB82E2919 /* Pods-TronWebDemo.debug.xcconfig */,
+				84730152913928A9A721AFB3 /* Pods-TronWebDemo.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		EF39E75B28C326AE005CD817 = {
+			isa = PBXGroup;
+			children = (
+				EF39E76628C326AE005CD817 /* TronWebDemo */,
+				EF39E76528C326AE005CD817 /* Products */,
+				CF1C4B95A2D4C7163493CB07 /* Pods */,
+				68BC2BB8786FE67745EAE919 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		EF39E76528C326AE005CD817 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EF39E76428C326AE005CD817 /* TronWebDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EF39E76628C326AE005CD817 /* TronWebDemo */ = {
+			isa = PBXGroup;
+			children = (
+				EF756E3728C4BBCE001CBCFC /* AppDelegate */,
+				EF39E77528C326B0005CD817 /* Info.plist */,
+				EF756E2E28C4BB71001CBCFC /* HomeViewController.swift */,
+				EF756E2F28C4BB71001CBCFC /* TransferViewController.swift */,
+				EF756E2B28C4BB71001CBCFC /* GetAccountViewController.swift */,
+				EF756E2D28C4BB71001CBCFC /* GetBalanceViewController.swift */,
+				EF756E3028C4BB71001CBCFC /* ResetTronWebPrivateKeyViewController.swift */,
+				EF756E2C28C4BB71001CBCFC /* Utils.swift */,
+				EF39E77028C326B0005CD817 /* Assets.xcassets */,
+				EF39E77228C326B0005CD817 /* LaunchScreen.storyboard */,
+				EF39E76D28C326AE005CD817 /* Main.storyboard */,
+			);
+			path = TronWebDemo;
+			sourceTree = "<group>";
+		};
+		EF756E3728C4BBCE001CBCFC /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				EF39E76728C326AE005CD817 /* AppDelegate.swift */,
+				EF39E76928C326AE005CD817 /* SceneDelegate.swift */,
+			);
+			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EF39E76328C326AE005CD817 /* TronWebDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EF39E77828C326B0005CD817 /* Build configuration list for PBXNativeTarget "TronWebDemo" */;
+			buildPhases = (
+				B9411A3310870578AAC680BF /* [CP] Check Pods Manifest.lock */,
+				EF39E76028C326AE005CD817 /* Sources */,
+				EF39E76128C326AE005CD817 /* Frameworks */,
+				EF39E76228C326AE005CD817 /* Resources */,
+				14FAE3F6CB1A9B656747577D /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TronWebDemo;
+			productName = TronWebDemo;
+			productReference = EF39E76428C326AE005CD817 /* TronWebDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EF39E75C28C326AE005CD817 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1330;
+				LastUpgradeCheck = 1330;
+				TargetAttributes = {
+					EF39E76328C326AE005CD817 = {
+						CreatedOnToolsVersion = 13.3;
+					};
+				};
+			};
+			buildConfigurationList = EF39E75F28C326AE005CD817 /* Build configuration list for PBXProject "TronWebDemo" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = EF39E75B28C326AE005CD817;
+			productRefGroup = EF39E76528C326AE005CD817 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EF39E76328C326AE005CD817 /* TronWebDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EF39E76228C326AE005CD817 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF39E77428C326B0005CD817 /* LaunchScreen.storyboard in Resources */,
+				EF39E77128C326B0005CD817 /* Assets.xcassets in Resources */,
+				EF39E76F28C326AE005CD817 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		14FAE3F6CB1A9B656747577D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TronWebDemo/Pods-TronWebDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TronWebDemo/Pods-TronWebDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TronWebDemo/Pods-TronWebDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B9411A3310870578AAC680BF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TronWebDemo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EF39E76028C326AE005CD817 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF756E3228C4BB71001CBCFC /* Utils.swift in Sources */,
+				EF756E3328C4BB71001CBCFC /* GetBalanceViewController.swift in Sources */,
+				EF756E3528C4BB71001CBCFC /* TransferViewController.swift in Sources */,
+				EF756E3128C4BB71001CBCFC /* GetAccountViewController.swift in Sources */,
+				EF39E76828C326AE005CD817 /* AppDelegate.swift in Sources */,
+				EF756E3628C4BB71001CBCFC /* ResetTronWebPrivateKeyViewController.swift in Sources */,
+				EF756E3428C4BB71001CBCFC /* HomeViewController.swift in Sources */,
+				EF39E76A28C326AE005CD817 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		EF39E76D28C326AE005CD817 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EF39E76E28C326AE005CD817 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		EF39E77228C326B0005CD817 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EF39E77328C326B0005CD817 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		EF39E77628C326B0005CD817 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		EF39E77728C326B0005CD817 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EF39E77928C326B0005CD817 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F9FC7C20A4E7A1FBB82E2919 /* Pods-TronWebDemo.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TronWebDemo/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tron.TronWebDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EF39E77A28C326B0005CD817 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 84730152913928A9A721AFB3 /* Pods-TronWebDemo.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TronWebDemo/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tron.TronWebDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EF39E75F28C326AE005CD817 /* Build configuration list for PBXProject "TronWebDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF39E77628C326B0005CD817 /* Debug */,
+				EF39E77728C326B0005CD817 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EF39E77828C326B0005CD817 /* Build configuration list for PBXNativeTarget "TronWebDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF39E77928C326B0005CD817 /* Debug */,
+				EF39E77A28C326B0005CD817 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EF39E75C28C326AE005CD817 /* Project object */;
+}
