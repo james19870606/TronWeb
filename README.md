@@ -15,7 +15,7 @@ The Swift Package Manager  is a tool for automating the distribution of Swift co
 Once you have your Swift package set up, adding SDBridgeSwift as a dependency is as easy as adding it to the dependencies value of your Package.swift.
 ```ruby
 dependencies: [
-    .package(url: "https://github.com/james19870606/TronWeb.git", .upToNextMajor(from: "1.1.2"))
+    .package(url: "https://github.com/james19870606/TronWeb.git", .upToNextMajor(from: "1.1.3"))
 ]
 ```
 
@@ -25,7 +25,7 @@ dependencies: [
 import TronWeb3
 ```
 
-##### Setup TronWeb
+##### Setup TronWeb3
 ```swift
 let tronWeb = TronWeb3()
 let privateKey = ""

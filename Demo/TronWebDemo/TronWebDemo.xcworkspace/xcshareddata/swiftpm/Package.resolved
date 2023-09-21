@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/james19870606/TronWeb",
       "state" : {
-        "revision" : "8528a40256f7e6268b6217d7e8c30e2d7f558f6a",
-        "version" : "1.1.2"
+        "revision" : "f1a1d4cca2bc6a923ed5945d659ac8a95066a5cf",
+        "version" : "1.1.3"
       }
     }
   ],
