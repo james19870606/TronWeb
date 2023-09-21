@@ -38,7 +38,7 @@ class GetBalanceViewController: UIViewController {
         let addressField = UITextField()
         addressField.borderStyle = .line
         addressField.placeholder = "査詢地址輸入框"
-        addressField.text = "TSwaZihvhdYogpoV9sJxMjEfK38AymSMY7"
+        addressField.text = "TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR"
         return addressField
     }()
     
@@ -108,24 +108,29 @@ class GetBalanceViewController: UIViewController {
         trc20AddressTextField.text = (chainType == .main) ? Trc20Address.main_trc20.rawValue : Trc20Address.nile_trc20.rawValue
     }
     func getTRXBalance(address: String) {
-        tronWeb.getRTXBalance(address: address) { [weak self] state, balance in
+        tronWeb.getRTXBalance(address: address) { [weak self] state, balance,error in
             guard let self = self else { return }
             self.getBalanceBtn.isEnabled = true
             if state {
                 let title = self.chainType == .main ? "主網餘額：" : "Nile測試網餘額： "
-                self.balanceLabel.text = title + balance
-                print("balance = \(balance)")
-            } else {}
+                self.balanceLabel.text = title + balance + " TRX"
+            } else {
+                self.balanceLabel.text = error
+            }
         }
     }
     func getTRC20Balance(address: String,trc20Address: String) {
-        tronWeb.getTRC20TokenBalance(address: address, trc20ContractAddress: trc20Address, decimalPoints: 6.0) { [weak self] state, balance in
+        tronWeb.getTRC20TokenBalance(address: address,
+                                     trc20ContractAddress: trc20Address,
+                                     decimalPoints: 6.0) { [weak self] state, balance,error in
             guard let self = self else { return }
             self.getBalanceBtn.isEnabled = true
             if state {
                 let title = self.chainType == .main ? "主網餘額：" : "Nile測試網餘額： "
                 self.balanceLabel.text = title + balance
-            } else {}
+            } else {
+                self.balanceLabel.text = error
+            }
         }
     }
     

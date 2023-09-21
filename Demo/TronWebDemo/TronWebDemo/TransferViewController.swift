@@ -20,18 +20,7 @@ enum TransferType: String, CaseIterable {
     case trc20 = "trc20_transfer"
 }
 
-enum OperationType: String, CaseIterable {
-    case trxTransfer
-    case trc20Transfer
-    case getTRC20TokenBalance
-    case getTRXBalance
-    
-    // 用來判斷是否地址是否啟動（上鏈）
-    case getAccount
-    
-    // 多錢包切換需要重新設定TronWebPrivateKey
-    case resetTronWebPrivateKey
-}
+
 
 enum Trc20Address: String {
     case main_trc20 = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"
@@ -60,8 +49,10 @@ class TransferViewController: UIViewController {
     
     lazy var privateKeyTextView: UITextView = {
         let textView = UITextView()
-        let p1 = "16b59002c68d963359452ad14f"
-        let p2 = "79cf58fb49070d7ca2277ebbcbb1de077fe221"
+        // 6b8ada62e0409ab554ec5f04b1ef295bc56e7f24116ecaed9f61edd08fc1141c
+        //
+        let p1 = "57f75d7325d8ba0e6882b4be7afb3bb36"
+        let p2 = "b34d184d3c58c28439a9b72cc597d86"
         textView.text = p1 + p2 
         textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor.brown.cgColor
@@ -219,11 +210,17 @@ class TransferViewController: UIViewController {
         guard let toAddress = reviceAddressField.text,
               let amountText = amountTextField.text,
               let remark = remarkTextView.text else { return }
-        tronWeb.trxTransferWithRemark(remark: remark, toAddress: toAddress, amount: amountText) { [weak self] (state, txid) in
+        tronWeb.trxTransferWithRemark(remark: remark,
+                                      toAddress: toAddress,
+                                      amount: amountText){ [weak self] (state, txid,error) in
             guard let self = self else { return }
             print("state = \(state)")
             print("txid = \(txid)")
-            self.hashLabel.text = txid
+            if (state) {
+                self.hashLabel.text = txid
+            } else {
+                self.hashLabel.text = error
+            }
         }
     }
     
@@ -232,11 +229,18 @@ class TransferViewController: UIViewController {
               let amountText = amountTextField.text,
               let remark = remarkTextView.text else { return }
         guard let trc20Address = self.trc20AddressTextField.text else { return }
-        tronWeb.trc20TokenTransfer(toAddress: toAddress, trc20ContractAddress: trc20Address, amount: amountText, remark: remark, feeLimit: "100000000") { [weak self] (state, txid) in
+        tronWeb.trc20TokenTransfer(toAddress: toAddress,
+                                   trc20ContractAddress: trc20Address, amount: amountText,
+                                   remark: remark,
+                                   feeLimit: "100000000") { [weak self] (state, txid,error) in
             guard let self = self else { return }
             print("state = \(state)")
             print("txid = \(txid)")
-            self.hashLabel.text = txid
+            if (state) {
+                self.hashLabel.text = txid
+            } else {
+                self.hashLabel.text = error
+            }
         }
     }
     

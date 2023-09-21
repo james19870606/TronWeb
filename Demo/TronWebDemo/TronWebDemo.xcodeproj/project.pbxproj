@@ -13,6 +13,9 @@
 		EF39E76F28C326AE005CD817 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF39E76D28C326AE005CD817 /* Main.storyboard */; };
 		EF39E77128C326B0005CD817 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF39E77028C326B0005CD817 /* Assets.xcassets */; };
 		EF39E77428C326B0005CD817 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF39E77228C326B0005CD817 /* LaunchScreen.storyboard */; };
+		EF4D0BF22ABBF50E005CC164 /* CreateRandomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D0BF12ABBF50E005CC164 /* CreateRandomViewController.swift */; };
+		EF4D0BF42ABBF54C005CC164 /* ImportAccountFromMnemonicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D0BF32ABBF54C005CC164 /* ImportAccountFromMnemonicViewController.swift */; };
+		EF4D0BF82ABBF594005CC164 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D0BF72ABBF594005CC164 /* CreateAccountViewController.swift */; };
 		EF756E3128C4BB71001CBCFC /* GetAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF756E2B28C4BB71001CBCFC /* GetAccountViewController.swift */; };
 		EF756E3228C4BB71001CBCFC /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF756E2C28C4BB71001CBCFC /* Utils.swift */; };
 		EF756E3328C4BB71001CBCFC /* GetBalanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF756E2D28C4BB71001CBCFC /* GetBalanceViewController.swift */; };
@@ -31,6 +34,9 @@
 		EF39E77028C326B0005CD817 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EF39E77328C326B0005CD817 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EF39E77528C326B0005CD817 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF4D0BF12ABBF50E005CC164 /* CreateRandomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRandomViewController.swift; sourceTree = "<group>"; };
+		EF4D0BF32ABBF54C005CC164 /* ImportAccountFromMnemonicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportAccountFromMnemonicViewController.swift; sourceTree = "<group>"; };
+		EF4D0BF72ABBF594005CC164 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		EF756E2B28C4BB71001CBCFC /* GetAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAccountViewController.swift; sourceTree = "<group>"; };
 		EF756E2C28C4BB71001CBCFC /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		EF756E2D28C4BB71001CBCFC /* GetBalanceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetBalanceViewController.swift; sourceTree = "<group>"; };
@@ -95,6 +101,9 @@
 				EF756E2E28C4BB71001CBCFC /* HomeViewController.swift */,
 				EF756E2F28C4BB71001CBCFC /* TransferViewController.swift */,
 				EF756E2B28C4BB71001CBCFC /* GetAccountViewController.swift */,
+				EF4D0BF12ABBF50E005CC164 /* CreateRandomViewController.swift */,
+				EF4D0BF32ABBF54C005CC164 /* ImportAccountFromMnemonicViewController.swift */,
+				EF4D0BF72ABBF594005CC164 /* CreateAccountViewController.swift */,
 				EF756E2D28C4BB71001CBCFC /* GetBalanceViewController.swift */,
 				EF756E3028C4BB71001CBCFC /* ResetTronWebPrivateKeyViewController.swift */,
 				EF756E2C28C4BB71001CBCFC /* Utils.swift */,
@@ -229,14 +238,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF4D0BF82ABBF594005CC164 /* CreateAccountViewController.swift in Sources */,
 				EF756E3228C4BB71001CBCFC /* Utils.swift in Sources */,
 				EF756E3328C4BB71001CBCFC /* GetBalanceViewController.swift in Sources */,
 				EF756E3528C4BB71001CBCFC /* TransferViewController.swift in Sources */,
 				EF756E3128C4BB71001CBCFC /* GetAccountViewController.swift in Sources */,
 				EF39E76828C326AE005CD817 /* AppDelegate.swift in Sources */,
 				EF756E3628C4BB71001CBCFC /* ResetTronWebPrivateKeyViewController.swift in Sources */,
+				EF4D0BF22ABBF50E005CC164 /* CreateRandomViewController.swift in Sources */,
 				EF756E3428C4BB71001CBCFC /* HomeViewController.swift in Sources */,
 				EF39E76A28C326AE005CD817 /* SceneDelegate.swift in Sources */,
+				EF4D0BF42ABBF54C005CC164 /* ImportAccountFromMnemonicViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

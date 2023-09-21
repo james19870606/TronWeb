@@ -7,13 +7,29 @@
 
 import UIKit
 
+enum OperationType: String, CaseIterable {
+    case createRandom
+    case createAccount
+    case importAccountFromMnemonic
+    case trxTransfer
+    case trc20Transfer
+    case getTRC20TokenBalance
+    case getTRXBalance
+
+    // 用來判斷是否地址是否啟動（上鏈）
+    case getAccount
+
+    // 多錢包切換需要重新設定TronWebPrivateKey
+    case resetTronWebPrivateKey
+}
+
 class HomeViewController: UIViewController {
     lazy var transferTypes: [TransferType] = TransferType.allCases
-    
+
     lazy var operationTypes: [OperationType] = OperationType.allCases
-    
+
     lazy var chainTypes: [ChainType] = ChainType.allCases
-    
+
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "DefaultCell")
@@ -53,16 +69,23 @@ extension HomeViewController: UITableViewDelegate {
         let chainType = chainTypes[indexPath.section]
         let operationType = operationTypes[indexPath.row]
         switch operationType {
-        case .trxTransfer, .trc20Transfer:
-            let transferType = transferTypes[indexPath.row]
-            let vc = TransferViewController(chainType, transferType)
+        case .createRandom:
+            navigationController?.pushViewController(CreateRandomViewController(), animated: true)
+        case .createAccount:
+            navigationController?.pushViewController(CreateAccountViewController(), animated: true)
+        case .importAccountFromMnemonic:
+            navigationController?.pushViewController(ImportAccountFromMnemonicViewController(), animated: true)
+        case .trxTransfer:
+            let vc = TransferViewController(chainType, .trx)
             navigationController?.pushViewController(vc, animated: true)
-        case .getTRC20TokenBalance,.getTRXBalance:
-            let vc = GetBalanceViewController.init(chainType, operationType)
+        case .trc20Transfer:
+            let vc = TransferViewController(chainType, .trc20)
+            navigationController?.pushViewController(vc, animated: true)
+        case .getTRC20TokenBalance, .getTRXBalance:
+            let vc = GetBalanceViewController(chainType, operationType)
             navigationController?.pushViewController(vc, animated: true)
         case .getAccount:
-            print("getAccount")
-            let vc = GetAccountViewController.init(chainType, operationType)
+            let vc = GetAccountViewController(chainType, operationType)
             navigationController?.pushViewController(vc, animated: true)
         case .resetTronWebPrivateKey:
             let vc = ResetTronWebPrivateKeyViewController()
@@ -75,18 +98,18 @@ extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return operationTypes.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DefaultCell", for: indexPath)
         let title = operationTypes[indexPath.row].rawValue
         cell.textLabel?.text = title
         return cell
     }
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return chainTypes.count
     }
-    
+
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let title = chainTypes[section]
         return title.rawValue
