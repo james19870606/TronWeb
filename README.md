@@ -7,7 +7,7 @@
 
 ![](Resource/DemoImage01.png)
 
-For more specific usage, please refer to the [demo](https://github.com/james19870606/TronWeb/tree/master/Demo/TronWebDemo)
+For more specific usage, please refer to the [demo](https://github.com/james19870606/TronWeb/tree/main/Demo/TronWebDemo)
 
 ### Swift Package Manager
 The Swift Package Manager  is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
@@ -136,7 +136,7 @@ tronWeb.trc20TokenTransfer(toAddress: toAddress,
 }
 ```
 
-更详细的使用方法,建议参考 [demo](https://github.com/james19870606/TronWeb/tree/master/Demo/TronWebDemo)
+更详细的使用方法,建议参考 [demo](https://github.com/james19870606/TronWeb/tree/main/Demo/TronWebDemo)
 
 ## License
 
