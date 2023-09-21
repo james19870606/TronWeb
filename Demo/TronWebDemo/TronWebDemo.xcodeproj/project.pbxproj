@@ -22,6 +22,7 @@
 		EF756E3428C4BB71001CBCFC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF756E2E28C4BB71001CBCFC /* HomeViewController.swift */; };
 		EF756E3528C4BB71001CBCFC /* TransferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF756E2F28C4BB71001CBCFC /* TransferViewController.swift */; };
 		EF756E3628C4BB71001CBCFC /* ResetTronWebPrivateKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF756E3028C4BB71001CBCFC /* ResetTronWebPrivateKeyViewController.swift */; };
+		EFE61A9E2ABC945C0030CAD6 /* TronWeb3 in Frameworks */ = {isa = PBXBuildFile; productRef = EFE61A9D2ABC945C0030CAD6 /* TronWeb3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EFE61A9E2ABC945C0030CAD6 /* TronWeb3 in Frameworks */,
 				0BDB4BB8BAE992315B29EE38 /* Pods_TronWebDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -141,6 +143,9 @@
 			dependencies = (
 			);
 			name = TronWebDemo;
+			packageProductDependencies = (
+				EFE61A9D2ABC945C0030CAD6 /* TronWeb3 */,
+			);
 			productName = TronWebDemo;
 			productReference = EF39E76428C326AE005CD817 /* TronWebDemo.app */;
 			productType = "com.apple.product-type.application";
@@ -169,6 +174,9 @@
 				Base,
 			);
 			mainGroup = EF39E75B28C326AE005CD817;
+			packageReferences = (
+				EFE61A9C2ABC945C0030CAD6 /* XCRemoteSwiftPackageReference "TronWeb" */,
+			);
 			productRefGroup = EF39E76528C326AE005CD817 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -466,6 +474,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EFE61A9C2ABC945C0030CAD6 /* XCRemoteSwiftPackageReference "TronWeb" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/james19870606/TronWeb";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EFE61A9D2ABC945C0030CAD6 /* TronWeb3 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EFE61A9C2ABC945C0030CAD6 /* XCRemoteSwiftPackageReference "TronWeb" */;
+			productName = TronWeb3;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EF39E75C28C326AE005CD817 /* Project object */;
 }
