@@ -481,7 +481,7 @@
 			repositoryURL = "https://github.com/james19870606/TronWeb";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.1.2;
+				minimumVersion = 1.1.4;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
