@@ -15,7 +15,7 @@ The Swift Package Manager  is a tool for automating the distribution of Swift co
 Once you have your Swift package set up, adding TronWeb as a dependency is as easy as adding it to the dependencies value of your Package.swift.
 ```ruby
 dependencies: [
-    .package(url: "https://github.com/james19870606/TronWeb.git", .upToNextMajor(from: "1.1.3"))
+    .package(url: "https://github.com/james19870606/TronWeb.git", .upToNextMajor(from: "1.1.4"))
 ]
 ```
 
