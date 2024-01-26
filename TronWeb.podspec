@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "TronWeb"
-  s.version      = "1.1.1"
+  s.version      = "1.1.4"
   s.summary      = "Generate account/ import account/ TRX Transfer/ TRC20 Transfer/ Get TRX Balance/ TRC20 Balance with Swift."
 
   # This description is used to generate tags and improve search results.
@@ -78,7 +78,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/james19870606/TronWeb.git", :tag => "#{s.version}" }
+  s.source       = { :git => "git@github.com:james19870606/TronWeb.git", :tag => "#{s.version}" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #

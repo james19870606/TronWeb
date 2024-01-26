@@ -50,10 +50,11 @@ class TransferViewController: UIViewController {
     lazy var privateKeyTextView: UITextView = {
         let textView = UITextView()
         // 16b59002c68d963359452ad14f79cf58fb49070d7ca2277ebbcbb1de077fe221
-        //
+        // 0bdb084700f74a834faa94a3098aee926e30c93f968087aed7c5dad6be3484e9
         let p1 = "57f75d7325d8ba0e6882b4be7afb3bb36"
         let p2 = "b34d184d3c58c28439a9b72cc597d86"
-        textView.text = p1 + p2 
+        //               13a6b3aa76c7d19969913dea1a9f3c4e7e556cd1965ee9b2a7274961bc6b6e93
+        textView.text = "af742f9e98f8f0f5315d1f9e2b8db9b35e18220d700be8a316e15cd6dbbf51ca"
         textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor.brown.cgColor
         return textView
