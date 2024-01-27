@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import TronWeb3
+import TronWeb
 import UIKit
 class GetAccountViewController: UIViewController {
     var chainType: ChainType = .nile

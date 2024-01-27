@@ -5,7 +5,7 @@
 //  Created by Charles on 2023/9/21.
 //
 
-import TronWeb3
+import TronWeb
 import UIKit
 
 class CreateRandomViewController: UIViewController {

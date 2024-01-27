@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-import TronWeb3
+import TronWeb
 class ResetTronWebPrivateKeyViewController: UIViewController {
     lazy var tronWeb:TronWeb3 = {
         let tronweb = TronWeb3()

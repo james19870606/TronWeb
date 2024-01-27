@@ -8,7 +8,7 @@
 import Foundation
 import SnapKit
 import UIKit
-import TronWeb3
+import TronWeb
 class GetBalanceViewController: UIViewController {
     var chainType: ChainType = .nile
     var operationType: OperationType = .getTRXBalance

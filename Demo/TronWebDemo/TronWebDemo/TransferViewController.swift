@@ -9,7 +9,7 @@ import Foundation
 import SnapKit
 import UIKit
 import SafariServices
-import TronWeb3
+import TronWeb
 enum ChainType: String, CaseIterable {
     case main
     case nile
