@@ -28,7 +28,7 @@ dependencies: [
 ### Example usage
 
 ```swift
-import TronWeb3
+import TronWeb
 ```
 
 ##### Setup TronWeb3
