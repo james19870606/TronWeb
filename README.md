@@ -13,7 +13,7 @@ For more specific usage, please refer to the [demo](https://github.com/james1987
 Add this to your [podfile](https://guides.cocoapods.org/using/getting-started.html) and run `pod install` to install:
 
 ```ruby
-pod 'TronWeb', '~> 1.1.4'
+pod 'TronWeb', '~> 1.1.5'
 ```
 ### Swift Package Manager
 The Swift Package Manager  is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
@@ -21,7 +21,7 @@ The Swift Package Manager  is a tool for automating the distribution of Swift co
 Once you have your Swift package set up, adding TronWeb as a dependency is as easy as adding it to the dependencies value of your Package.swift.
 ```ruby
 dependencies: [
-    .package(url: "https://github.com/james19870606/TronWeb.git", .upToNextMajor(from: "1.1.4"))
+    .package(url: "https://github.com/james19870606/TronWeb.git", .upToNextMajor(from: "1.1.5"))
 ]
 ```
 
@@ -37,10 +37,12 @@ let tronWeb = TronWeb3()
 let privateKey = ""
 let TRONApiKey = ""
 if tronWeb.isGenerateTronWebInstanceSuccess != true {
-    tronWeb.setup(privateKey: privateKey, node: chainType == .main ? TRONMainNet : TRONNileNet) { [weak self] setupResult in
+    tronWeb.setup(privateKey: privateKey, node: chainType == .main ? TRONMainNet : TRONNileNet) { [weak self] setupResult,error in
         guard let self = self else { return }
         if setupResult {
         //......
+        } else { 
+          print(error)
         }
     }
 } else {
