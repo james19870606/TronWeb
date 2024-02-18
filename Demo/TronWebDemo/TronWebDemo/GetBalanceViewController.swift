@@ -140,10 +140,12 @@ class GetBalanceViewController: UIViewController {
         guard let address = addressField.text,let trc20Address = trc20AddressTextField.text else { return }
         
         if tronWeb.isGenerateTronWebInstanceSuccess != true {
-            tronWeb.setup(privateKey: "01", node: chainType == .main ? TRONMainNet : TRONNileNet) { [weak self] setupResult in
+            tronWeb.setup(privateKey: "01", node: chainType == .main ? TRONMainNet : TRONNileNet) { [weak self] setupResult,error in
                 guard let self = self else { return }
                 if setupResult {
                     self.operationType == .getTRXBalance ? self.getTRXBalance(address: address) : self.getTRC20Balance(address: address, trc20Address: trc20Address)
+                } else {
+                    print(error)
                 }
             }
         } else {

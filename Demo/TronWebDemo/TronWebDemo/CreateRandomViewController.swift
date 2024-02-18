@@ -82,10 +82,12 @@ class CreateRandomViewController: UIViewController {
         createRandomBtn.isEnabled = false
         tipLabel.text = "creating ..."
         if tronWeb.isGenerateTronWebInstanceSuccess != true {
-            tronWeb.setup(privateKey: "01", node: TRONMainNet) { [weak self] setupResult in
+            tronWeb.setup(privateKey: "01", node: TRONMainNet) { [weak self] setupResult,error in
                 guard let self = self else { return }
                 if setupResult {
                     self.createRandom()
+                } else {
+                   print(error)
                 }
             }
         } else {
@@ -109,5 +111,9 @@ class CreateRandomViewController: UIViewController {
                 walletDetailTextView.text = error
             }
         }
+    }
+    
+    deinit {
+        print("\(type(of: self)) release")
     }
 }

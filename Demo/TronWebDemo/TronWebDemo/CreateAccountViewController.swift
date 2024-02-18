@@ -44,7 +44,9 @@ class CreateAccountViewController: UIViewController {
         setupView()
         // Do any additional setup after loading the view.
     }
-
+    deinit {
+        print("\(type(of: self)) release")
+    }
     func setupView() {
         setupNav()
         setupContent()
@@ -81,10 +83,12 @@ class CreateAccountViewController: UIViewController {
         createAccountBtn.isEnabled = false
         tipLabel.text = "creating ..."
         if tronWeb.isGenerateTronWebInstanceSuccess != true {
-            tronWeb.setup(privateKey: "01", node: TRONMainNet) { [weak self] setupResult in
+            tronWeb.setup(privateKey: "01", node: TRONMainNet) { [weak self] setupResult,error in
                 guard let self = self else { return }
                 if setupResult {
                     self.createAccount()
+                } else {
+                    print(error)
                 }
             }
         } else {

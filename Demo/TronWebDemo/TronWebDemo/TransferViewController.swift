@@ -248,10 +248,12 @@ class TransferViewController: UIViewController {
     @objc func transferAction() {
         guard let privateKey = privateKeyTextView.text else { return }
         if tronWeb.isGenerateTronWebInstanceSuccess != true {
-            tronWeb.setup(privateKey: privateKey, node: chainType == .main ? TRONMainNet : TRONNileNet) { [weak self] setupResult in
+            tronWeb.setup(privateKey: privateKey, node: chainType == .main ? TRONMainNet : TRONNileNet) { [weak self] setupResult,error in
                 guard let self = self else { return }
                 if setupResult {
                     self.transferType == .trx ? self.trxTransfer() : self.trc20Transfer()
+                } else {
+                    print(error)
                 }
             }
         } else {

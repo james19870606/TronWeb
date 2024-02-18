@@ -118,10 +118,12 @@ class GetAccountViewController: UIViewController {
     @objc func getAccountAction() {
         guard let address = addressField.text else { return }
         if tronWeb.isGenerateTronWebInstanceSuccess != true {
-            tronWeb.setup(privateKey: "01", node: chainType == .main ? TRONMainNet : TRONNileNet) { [weak self] setupResult in
+            tronWeb.setup(privateKey: "01", node: chainType == .main ? TRONMainNet : TRONNileNet) { [weak self] setupResult,error in
                 guard let self = self else { return }
                 if setupResult {
                     self.isTRXAddress(address: address)
+                } else {
+                    print(error)
                 }
             }
         } else {

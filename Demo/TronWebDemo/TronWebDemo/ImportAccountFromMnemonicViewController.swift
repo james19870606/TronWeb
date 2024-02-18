@@ -51,6 +51,9 @@ class ImportAccountFromMnemonicViewController: UIViewController {
         setupView()
         // Do any additional setup after loading the view.
     }
+    deinit {
+        print("\(type(of: self)) release")
+    }
 
     func setupView() {
         setupNav()
@@ -94,10 +97,12 @@ class ImportAccountFromMnemonicViewController: UIViewController {
         importAccountFromMnemonicBtn.isEnabled = false
         tipLabel.text = "importing ..."
         if tronWeb.isGenerateTronWebInstanceSuccess != true {
-            tronWeb.setup(privateKey: "01", node: TRONMainNet) { [weak self] setupResult in
+            tronWeb.setup(privateKey: "01", node: TRONMainNet) { [weak self] setupResult,error in
                 guard let self = self else { return }
                 if setupResult {
                     self.importAccountFromMnemonic()
+                }else {
+                    print(error)
                 }
             }
         } else {

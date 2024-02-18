@@ -38,7 +38,7 @@ public class TronWeb3: NSObject {
     var webView: WKWebView!
     var bridge: WKWebViewJavascriptBridge!
     public var isGenerateTronWebInstanceSuccess: Bool = false
-    var onCompleted: ((Bool) -> Void)?
+    var onCompleted: ((Bool,String) -> Void)?
     var showLog: Bool = true
     override public init() {
         super.init()
@@ -53,7 +53,7 @@ public class TronWeb3: NSObject {
         print("\(type(of: self)) release")
     }
 
-    public func setup(showLog: Bool = true, privateKey: String? = "", apiKey: String? = TRONApiKey, node: String = TRONNileNet, onCompleted: ((Bool) -> Void)? = nil) {
+    public func setup(showLog: Bool = true, privateKey: String? = "", apiKey: String? = TRONApiKey, node: String = TRONNileNet, onCompleted: ((Bool,String) -> Void)? = nil) {
         self.onCompleted = onCompleted
         self.showLog = showLog
         #if !DEBUG
@@ -70,26 +70,27 @@ public class TronWeb3: NSObject {
 
     func loadBundleResource(bundleName: String, sourceName: String) -> String {
         let bundleResourcePath = Bundle.module.path(forResource: bundleName, ofType: "bundle")
-
-//        var bundleResourcePath = Bundle.main.path(forResource: "Frameworks/\(bundleName).framework/\(bundleName)", ofType: "bundle")
-//        if bundleResourcePath == nil {
-//            bundleResourcePath = Bundle.main.path(forResource: bundleName, ofType: "bundle") ?? ""
-//        }
         return bundleResourcePath! + sourceName
     }
 
     func generateTronWebInstance(privateKey: String?, apiKey: String? = TRONApiKey, node: String = TRONNileNet) {
         let params = ["privateKey": privateKey, "node": node, "apiKey": apiKey]
-        self.bridge.call(handlerName: "generateTronWebInstance", data: params) { [weak self] result in
-            guard let self = self, let result = result as? [String: String], let result = result["result"] else { return }
-            if result == "1" {
+        self.bridge.call(handlerName: "generateTronWebInstance", data: params) { [weak self] response in
+            guard let self = self, let temp = response as? [String: Any] else {
+                self?.onCompleted?(false, "Invalid response format")
+                return
+            }
+            if self.showLog { print("response = \(String(describing: response))") }
+            if let state = temp["state"] as? Bool, state
+            {
                 self.isGenerateTronWebInstanceSuccess = true
-                if self.showLog { print("TronWeb初始化成功") }
-                self.onCompleted?(true)
+                onCompleted?(state, "")
+            } else if let error = temp["error"] as? String {
+                self.isGenerateTronWebInstanceSuccess = false
+                onCompleted?(false, error)
             } else {
                 self.isGenerateTronWebInstanceSuccess = false
-                if self.showLog { print("TronWeb初始化失败") }
-                self.onCompleted?(false)
+                onCompleted?(false,"Unknown response format")
             }
         }
     }
@@ -184,6 +185,8 @@ public class TronWeb3: NSObject {
                 onCompleted?(state, txid, "")
             } else if let error = temp["error"] as? String {
                 onCompleted?(false,"", error)
+            } else if let code = temp["code"] as? String,let txid = temp["txid"] as? String {
+                onCompleted?(false,txid,code)
             } else {
                 onCompleted?(false, "","Unknown response format")
             }
@@ -212,6 +215,8 @@ public class TronWeb3: NSObject {
                 onCompleted?(state, txid, "")
             } else if let error = temp["error"] as? String {
                 onCompleted?(false,"", error)
+            } else if let code = temp["code"] as? String,let txid = temp["txid"] as? String {
+                onCompleted?(false,txid,code)
             } else {
                 onCompleted?(false, "","Unknown response format")
             }
@@ -245,6 +250,8 @@ public class TronWeb3: NSObject {
                 onCompleted?(state, txid, "")
             } else if let error = temp["error"] as? String {
                 onCompleted?(false,"", error)
+            } else if let code = temp["code"] as? String,let txid = temp["txid"] as? String {
+                onCompleted?(false,txid,code)
             } else {
                 onCompleted?(false, "","Unknown response format")
             }
@@ -352,7 +359,4 @@ public class TronWeb3: NSObject {
             }
         }
     }
-    
-    
-    
 }

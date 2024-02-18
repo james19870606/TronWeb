@@ -54,9 +54,11 @@ class ResetTronWebPrivateKeyViewController: UIViewController {
     
     func setupTronweb(){
         guard let privateKey = privateKeyTextView.text else { return }
-        tronWeb.setup(privateKey: privateKey) {  setupResult in
+        tronWeb.setup(privateKey: privateKey) {  setupResult,error in
             if setupResult {
 
+            } else {
+                print(error)
             }
         }
 
