@@ -15,12 +15,10 @@ enum OperationType: String, CaseIterable {
     case trc20Transfer
     case getTRC20TokenBalance
     case getTRXBalance
-
-    // 用來判斷是否地址是否啟動（上鏈）
-    case getAccount
-
-    // 多錢包切換需要重新設定TronWebPrivateKey
-    case resetTronWebPrivateKey
+    case getChainParameters // 取得鏈結參數，例如1000個能量價值
+    case getAccountResources // Get the account's bandwidth and energy resources.
+    case getAccount // 用來判斷是否地址是否啟動（上鏈）
+    case resetTronWebPrivateKey  // 多錢包切換需要重新設定TronWebPrivateKey
 }
 
 class HomeViewController: UIViewController {
@@ -89,6 +87,12 @@ extension HomeViewController: UITableViewDelegate {
             navigationController?.pushViewController(vc, animated: true)
         case .resetTronWebPrivateKey:
             let vc = ResetTronWebPrivateKeyViewController()
+            navigationController?.pushViewController(vc, animated: true)
+        case .getChainParameters:
+            let vc = GetChainParametersViewController(chainType,operationType)
+            navigationController?.pushViewController(vc, animated: true)
+        case .getAccountResources:
+            let vc = GetAccountResourcesViewController(chainType,operationType)
             navigationController?.pushViewController(vc, animated: true)
         }
     }

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0BDB4BB8BAE992315B29EE38 /* Pods_TronWebDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B6040A00D457D5064447BB /* Pods_TronWebDemo.framework */; };
+		EF388D802C0B8B7300F0D495 /* GetAccountResourcesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF388D7F2C0B8B7300F0D495 /* GetAccountResourcesViewController.swift */; };
+		EF388D842C0C762500F0D495 /* FeeEstimateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF388D832C0C762500F0D495 /* FeeEstimateView.swift */; };
 		EF39E76828C326AE005CD817 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF39E76728C326AE005CD817 /* AppDelegate.swift */; };
 		EF39E76A28C326AE005CD817 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF39E76928C326AE005CD817 /* SceneDelegate.swift */; };
 		EF39E76F28C326AE005CD817 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF39E76D28C326AE005CD817 /* Main.storyboard */; };
@@ -22,11 +24,14 @@
 		EF756E3428C4BB71001CBCFC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF756E2E28C4BB71001CBCFC /* HomeViewController.swift */; };
 		EF756E3528C4BB71001CBCFC /* TransferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF756E2F28C4BB71001CBCFC /* TransferViewController.swift */; };
 		EF756E3628C4BB71001CBCFC /* ResetTronWebPrivateKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF756E3028C4BB71001CBCFC /* ResetTronWebPrivateKeyViewController.swift */; };
+		EFAA55172C0B32E200FF0C27 /* GetChainParametersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFAA55162C0B32E200FF0C27 /* GetChainParametersViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		84730152913928A9A721AFB3 /* Pods-TronWebDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TronWebDemo.release.xcconfig"; path = "Target Support Files/Pods-TronWebDemo/Pods-TronWebDemo.release.xcconfig"; sourceTree = "<group>"; };
 		88B6040A00D457D5064447BB /* Pods_TronWebDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TronWebDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF388D7F2C0B8B7300F0D495 /* GetAccountResourcesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountResourcesViewController.swift; sourceTree = "<group>"; };
+		EF388D832C0C762500F0D495 /* FeeEstimateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeeEstimateView.swift; sourceTree = "<group>"; };
 		EF39E76428C326AE005CD817 /* TronWebDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TronWebDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF39E76728C326AE005CD817 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EF39E76928C326AE005CD817 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -43,6 +48,7 @@
 		EF756E2E28C4BB71001CBCFC /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		EF756E2F28C4BB71001CBCFC /* TransferViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferViewController.swift; sourceTree = "<group>"; };
 		EF756E3028C4BB71001CBCFC /* ResetTronWebPrivateKeyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetTronWebPrivateKeyViewController.swift; sourceTree = "<group>"; };
+		EFAA55162C0B32E200FF0C27 /* GetChainParametersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChainParametersViewController.swift; sourceTree = "<group>"; };
 		F9FC7C20A4E7A1FBB82E2919 /* Pods-TronWebDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TronWebDemo.debug.xcconfig"; path = "Target Support Files/Pods-TronWebDemo/Pods-TronWebDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -101,12 +107,15 @@
 				EF756E2E28C4BB71001CBCFC /* HomeViewController.swift */,
 				EF756E2F28C4BB71001CBCFC /* TransferViewController.swift */,
 				EF756E2B28C4BB71001CBCFC /* GetAccountViewController.swift */,
+				EFAA55162C0B32E200FF0C27 /* GetChainParametersViewController.swift */,
+				EF388D7F2C0B8B7300F0D495 /* GetAccountResourcesViewController.swift */,
 				EF4D0BF12ABBF50E005CC164 /* CreateRandomViewController.swift */,
 				EF4D0BF32ABBF54C005CC164 /* ImportAccountFromMnemonicViewController.swift */,
 				EF4D0BF72ABBF594005CC164 /* CreateAccountViewController.swift */,
 				EF756E2D28C4BB71001CBCFC /* GetBalanceViewController.swift */,
 				EF756E3028C4BB71001CBCFC /* ResetTronWebPrivateKeyViewController.swift */,
 				EF756E2C28C4BB71001CBCFC /* Utils.swift */,
+				EF388D832C0C762500F0D495 /* FeeEstimateView.swift */,
 				EF39E77028C326B0005CD817 /* Assets.xcassets */,
 				EF39E77228C326B0005CD817 /* LaunchScreen.storyboard */,
 				EF39E76D28C326AE005CD817 /* Main.storyboard */,
@@ -251,8 +260,11 @@
 				EF756E3628C4BB71001CBCFC /* ResetTronWebPrivateKeyViewController.swift in Sources */,
 				EF4D0BF22ABBF50E005CC164 /* CreateRandomViewController.swift in Sources */,
 				EF756E3428C4BB71001CBCFC /* HomeViewController.swift in Sources */,
+				EF388D802C0B8B7300F0D495 /* GetAccountResourcesViewController.swift in Sources */,
 				EF39E76A28C326AE005CD817 /* SceneDelegate.swift in Sources */,
 				EF4D0BF42ABBF54C005CC164 /* ImportAccountFromMnemonicViewController.swift in Sources */,
+				EFAA55172C0B32E200FF0C27 /* GetChainParametersViewController.swift in Sources */,
+				EF388D842C0C762500F0D495 /* FeeEstimateView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -225,6 +225,28 @@ class TransferViewController: UIViewController {
         }
     }
     
+    // And transfer trx and trc10, they do not need to cost any energy, it just need some bandwidth
+    func estimateEnergy() {
+        guard let toAddress = reviceAddressField.text,
+              let amountText = amountTextField.text else { return }
+        guard let trc20Address = self.trc20AddressTextField.text else { return }
+        showEstimateEnergyView()
+        tronWeb.estimateEnergy(url:chainType == .main ? TRONMainNet : TRONNileNet, toAddress: toAddress, trc20ContractAddress: trc20Address, amount: amountText) { (state,feeDic,error) in
+            if state {
+                NotificationCenter.default.post(name: Notification.Name(rawValue:"FeeEstimateFinished"), object: feeDic)
+            } else {
+                
+            }
+       }
+    }
+    func showEstimateEnergyView() {
+        let estimateEnergyView = FeeEstimateView(frame: CGRect(x: 0, y: 0, width: KScreenWidth, height: KScreenHeight)) { [weak self] in
+            guard let self = self else { return }
+            self.trc20Transfer()
+        }
+        estimateEnergyView.show()
+    }
+    
     func trc20Transfer() {
         guard let toAddress = reviceAddressField.text,
               let amountText = amountTextField.text,
@@ -251,13 +273,13 @@ class TransferViewController: UIViewController {
             tronWeb.setup(privateKey: privateKey, node: chainType == .main ? TRONMainNet : TRONNileNet) { [weak self] setupResult,error in
                 guard let self = self else { return }
                 if setupResult {
-                    self.transferType == .trx ? self.trxTransfer() : self.trc20Transfer()
+                    self.transferType == .trx ? self.trxTransfer() : self.estimateEnergy()
                 } else {
                     print(error)
                 }
             }
         } else {
-            transferType == .trx ? trxTransfer() : trc20Transfer()
+            transferType == .trx ? trxTransfer() : estimateEnergy()
         }
     }
     
