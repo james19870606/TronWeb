@@ -34,7 +34,7 @@ class GetAccountResourcesViewController: UIViewController {
         let addressField = UITextField()
         addressField.borderStyle = .line
         addressField.placeholder = "査詢地址輸入框"
-        addressField.text = "THNKWVHcm8dSFdidiu9WBcNtDL2VKbaGDT"
+        addressField.text = "TVpdGyTuzZYXHRAjhhBFabFMU1xFnfmYKj"
         return addressField
     }()
     

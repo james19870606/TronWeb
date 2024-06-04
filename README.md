@@ -6,6 +6,8 @@
 [![CocoaPods](https://img.shields.io/badge/support-SwiftPackageManager-green)](https://www.swift.org/getting-started/#using-the-package-manager)
 
 ![](Resource/DemoImage01.png)
+![](Resource/DemoImage02.png)
+
 
 For more specific usage, please refer to the [demo](https://github.com/james19870606/TronWeb/tree/main/Demo/TronWebDemo)
 
@@ -13,7 +15,7 @@ For more specific usage, please refer to the [demo](https://github.com/james1987
 Add this to your [podfile](https://guides.cocoapods.org/using/getting-started.html) and run `pod install` to install:
 
 ```ruby
-pod 'TronWeb', '~> 1.1.5'
+pod 'TronWeb', '~> 1.1.6'
 ```
 ### Swift Package Manager
 The Swift Package Manager  is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
@@ -21,7 +23,7 @@ The Swift Package Manager  is a tool for automating the distribution of Swift co
 Once you have your Swift package set up, adding TronWeb as a dependency is as easy as adding it to the dependencies value of your Package.swift.
 ```ruby
 dependencies: [
-    .package(url: "https://github.com/james19870606/TronWeb.git", .upToNextMajor(from: "1.1.5"))
+    .package(url: "https://github.com/james19870606/TronWeb.git", .upToNextMajor(from: "1.1.6"))
 ]
 ```
 
@@ -141,6 +143,25 @@ tronWeb.trc20TokenTransfer(toAddress: toAddress,
     } else {
         self.hashLabel.text = error
     }
+}
+```
+##### Estimate Fee when Send TRC20
+```swift
+let toAddress = ""
+let amountText = amountTextField.text
+let trc20Address = self.trc20AddressTextField.text 
+tronWeb.estimateEnergy(url:chainType == .main ? TRONMainNet : TRONNileNet, toAddress: toAddress, trc20ContractAddress: trc20Address, amount: amountText) { (state,feeDic,error) in
+        if state {
+              /*
+                feeDic =     {
+                    energyFee = 420;
+                    "energy_used" = 4146;
+                    feeLimit = "1.74132";
+                };
+               */
+        } else {
+            
+        }
 }
 ```
 
