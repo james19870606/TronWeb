@@ -27,10 +27,16 @@ dependencies: [
 ]
 ```
 
-### Example usage
+### Example usage in CocoaPods
 
 ```swift
-import TronWeb
+import TronWeb   
+```
+
+### Example usage in Swift Package Manager
+
+```swift
+import TronWeb3   
 ```
 
 ##### Setup TronWeb3
