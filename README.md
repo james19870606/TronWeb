@@ -6,8 +6,6 @@
 [![CocoaPods](https://img.shields.io/badge/support-SwiftPackageManager-green)](https://www.swift.org/getting-started/#using-the-package-manager)
 
 ![](Resource/DemoImage01.png)
-![](Resource/DemoImage02.png)
-
 
 For more specific usage, please refer to the [demo](https://github.com/james19870606/TronWeb/tree/main/Demo/TronWebDemo)
 
