@@ -12,11 +12,12 @@ let KScreenHeight = UIScreen.main.bounds.size.height
 
 let KKWindow = UIApplication.shared.windows.first!
 
-typealias TransferConformBlock = (() -> Void)
+typealias TransferConformBlock = ((TransferType) -> Void)
 
 class FeeEstimateView: UIView {
     
     var callback:TransferConformBlock?
+    var transferType: TransferType = .trc20
 
     let contentViewHeight:CGFloat = 260.0
     lazy var contentView: UIView = {
@@ -84,9 +85,10 @@ class FeeEstimateView: UIView {
         super.init(frame: frame)
     }
 
-    init(frame: CGRect,completion: @escaping TransferConformBlock) {
+    init(frame: CGRect,_transferType:TransferType, completion: @escaping TransferConformBlock) {
         super.init(frame: frame)
         self.isUserInteractionEnabled = false
+        transferType = _transferType
         callback = completion
         addNotify()
     }
@@ -98,17 +100,27 @@ class FeeEstimateView: UIView {
     @objc func feeEstimateFinished(_ notification: Notification){
         self.isUserInteractionEnabled = true
         titleLabel.text = "手續費預估結果"
-        guard let dict =  notification.object as? [String:Any] else { return }
-        if let feeLimit = dict["feeLimit"] as? String,
-           let energy_used = dict["energy_used"] as? NSNumber {
-            self.resourceConsumedLabel.text = "Resource Consumed  339 Bandwidth" + "         \(String(describing: energy_used)) Energy"
-            self.feeLabel.text = "Fee      \(String(describing: feeLimit))TRX"
+        guard let dict =  notification.object as? [String:Any]  else { return }
+        if transferType == .trc20 {
+            if let feeLimit = dict["feeLimit"] as? String,
+               let energy_used = dict["energy_used"] as? NSNumber {
+                self.resourceConsumedLabel.text = "Resource Consumed  339 Bandwidth" + "         \(String(describing: energy_used)) Energy"
+                self.feeLabel.text = "Fee      \(String(describing: feeLimit)) TRX"
+            }
+        } else {
+            if let noteFee = dict["noteFee"] as? Double,let activationFee = dict["activationFee"] as? Double,
+               let requiredBandwidth = dict["requiredBandwidth"] as? Double {
+                self.resourceConsumedLabel.text = "Resource Consumed  \(Int64(requiredBandwidth)) Bandwidth"
+                let totalFee = noteFee + activationFee  + (requiredBandwidth / 1000)
+                self.feeLabel.text = "Fee      \(String(describing: totalFee)) TRX"
+            }
         }
+       
     }
     
     @objc func nextStep(){
         dismiss()
-        callback?()
+        callback?(transferType)
     }
     
     func setupContentView() {

@@ -285,6 +285,34 @@ public class TronWeb3: NSObject {
             }
         }
     }
+    // MARK: trx轉帳estimate Fee
+    public func estimateTRXTransferFee(toAddress: String,
+                                   amount: String,
+                                       note: String = "",
+                               onCompleted: ((Bool, [String:Any],[String:Any],String) -> Void)? = nil)
+    {
+        let params: [String: Any] = ["note":note,
+                                      "toAddress": toAddress,
+                                      "amount": amount]
+        self.bridge.call(handlerName: "estimateTRXFee", data: params) { response in
+            if self.showLog { print("response = \(String(describing: response))") }
+            guard let temp = response as? [String: Any] else {
+                onCompleted?(false, [:],[:], "Invalid response format")
+                return
+            }
+            
+            if let state = temp["state"] as? Bool, state,
+               let sendAccountResources = temp["sendAccountResources"] as? [String:Any],
+               let feeDic = temp["result"] as? [String:Any]
+            {
+                onCompleted?(state,sendAccountResources,feeDic, "")
+            } else if let error = temp["error"] as? String {
+                onCompleted?(false,[:],[:], error)
+            }  else {
+                onCompleted?(false,[:],[:],"Unknown response format")
+            }
+        }
+    }
 
     // MARK: 校驗是否是TRX的地址
 
@@ -315,7 +343,7 @@ public class TronWeb3: NSObject {
     
     // MARK: getChainParameters
     public func getChainParameters(onCompleted: ((Bool,[[String: Any]],String) -> Void)? = nil) {
-        self.bridge.call(handlerName: "getChainParameters", data: [:]) { response in
+        self.bridge.call(handlerName: "getChainParameters") { response in
             if self.showLog { print("response = \(String(describing: response))") }
             guard let temp = response as? [String: Any] else {
                 onCompleted?(false, [[:]], "Invalid response format")
@@ -332,7 +360,8 @@ public class TronWeb3: NSObject {
     
     // MARK: getAccountResources
     public func getAccountResources(address: String,onCompleted: ((Bool,[String: Any],String) -> Void)? = nil) {
-        self.bridge.call(handlerName: "getAccountResources", data: [:]) { response in
+        let params: [String: String] = ["address": address]
+        self.bridge.call(handlerName: "getAccountResources", data: params) { response in
             if self.showLog { print("response = \(String(describing: response))") }
             guard let temp = response as? [String: Any] else {
                 onCompleted?(false, [:], "Invalid response format")
@@ -422,4 +451,3 @@ public class TronWeb3: NSObject {
         }
     }
 }
-

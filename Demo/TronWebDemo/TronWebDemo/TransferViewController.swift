@@ -21,7 +21,6 @@ enum TransferType: String, CaseIterable {
 }
 
 
-
 enum Trc20Address: String {
     case main_trc20 = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"
     case nile_trc20 = "TXLAQ63Xg1NAzckPwKHvzw7CSEmLMEqcdj"
@@ -53,8 +52,7 @@ class TransferViewController: UIViewController {
         // 0bdb084700f74a834faa94a3098aee926e30c93f968087aed7c5dad6be3484e9
         let p1 = "57f75d7325d8ba0e6882b4be7afb3bb36"
         let p2 = "b34d184d3c58c28439a9b72cc597d86"
-        //               13a6b3aa76c7d19969913dea1a9f3c4e7e556cd1965ee9b2a7274961bc6b6e93
-        textView.text = "af742f9e98f8f0f5315d1f9e2b8db9b35e18220d700be8a316e15cd6dbbf51ca"
+        textView.text = p1 + p2
         textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor.brown.cgColor
         return textView
@@ -230,7 +228,7 @@ class TransferViewController: UIViewController {
         guard let toAddress = reviceAddressField.text,
               let amountText = amountTextField.text else { return }
         guard let trc20Address = self.trc20AddressTextField.text else { return }
-        showEstimateEnergyView()
+        showEstimateView()
         tronWeb.estimateEnergy(url:chainType == .main ? TRONMainNet : TRONNileNet, toAddress: toAddress, trc20ContractAddress: trc20Address, amount: amountText) { (state,feeDic,error) in
             if state {
                 NotificationCenter.default.post(name: Notification.Name(rawValue:"FeeEstimateFinished"), object: feeDic)
@@ -239,12 +237,32 @@ class TransferViewController: UIViewController {
             }
        }
     }
-    func showEstimateEnergyView() {
-        let estimateEnergyView = FeeEstimateView(frame: CGRect(x: 0, y: 0, width: KScreenWidth, height: KScreenHeight)) { [weak self] in
+    
+    func showEstimateView(transferType:TransferType = .trc20) {
+        let estimateView = FeeEstimateView(frame: CGRect(x: 0, y: 0, width: KScreenWidth, height: KScreenHeight),_transferType: transferType) { [weak self]  transferType in
             guard let self = self else { return }
-            self.trc20Transfer()
+            if transferType == .trc20 {
+                self.trc20Transfer()
+            } else {
+                self.trxTransfer()
+            }
         }
-        estimateEnergyView.show()
+        estimateView.show()
+    }
+    
+    
+    func estimateTRXTransferFee() {
+        guard let toAddress = reviceAddressField.text,
+              let amountText = amountTextField.text else { return}
+        let remark = remarkTextView.text ?? ""
+        showEstimateView(transferType: .trx)
+        tronWeb.estimateTRXTransferFee(toAddress: toAddress, amount: amountText,note: remark){ (state,sendAccountResources,feeDic,error) in
+            if state {
+                NotificationCenter.default.post(name: Notification.Name(rawValue:"FeeEstimateFinished"), object: feeDic)
+            } else {
+                
+            }
+        }
     }
     
     func trc20Transfer() {
@@ -273,13 +291,13 @@ class TransferViewController: UIViewController {
             tronWeb.setup(privateKey: privateKey, node: chainType == .main ? TRONMainNet : TRONNileNet) { [weak self] setupResult,error in
                 guard let self = self else { return }
                 if setupResult {
-                    self.transferType == .trx ? self.trxTransfer() : self.estimateEnergy()
+                    self.transferType == .trx ? self.estimateTRXTransferFee() : self.estimateEnergy()
                 } else {
                     print(error)
                 }
             }
         } else {
-            transferType == .trx ? trxTransfer() : estimateEnergy()
+            transferType == .trx ? estimateTRXTransferFee() : estimateEnergy()
         }
     }
     
