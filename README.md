@@ -110,7 +110,22 @@ tronWeb.importAccountFromMnemonic (mnemonic: mnemonic){ [weak self] state, addre
     }
 }
 ```
-
+##### Import Account From PrivateKey
+```swift
+tronWeb.importAccountFromPrivateKey (privateKey: privateKey){ [weak self] state, base58, hex, error in
+    guard let self = self else { return }
+    self.importAccountFromPrivateKeyBtn.isEnabled = true
+    tipLabel.text = "import finished."
+    if state {
+        let text =
+            "base58: " + base58 + "\n\n" +
+            "hex: " + hex
+        walletDetailTextView.text = text
+    } else {
+        walletDetailTextView.text = error
+    }
+}
+```
 ##### Send TRX
 ```swift
 let remark = ""

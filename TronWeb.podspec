@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "TronWeb"
-  s.version      = "1.1.7"
+  s.version      = "1.1.8"
   s.summary      = "Generate account/ import account/ TRX Transfer/ TRC20 Transfer/ Get TRX Balance/ TRC20 Balance with Swift."
 
   # This description is used to generate tags and improve search results.
@@ -66,7 +66,7 @@ Pod::Spec.new do |s|
   # s.platform     = :ios, "5.0"
 
   #  When using multiple platforms
-   s.ios.deployment_target = "11.0"
+   s.ios.deployment_target = "12.0"
 #    s.osx.deployment_target = "10.10"
   # s.watchos.deployment_target = "2.0"
   # s.tvos.deployment_target = "9.0"
