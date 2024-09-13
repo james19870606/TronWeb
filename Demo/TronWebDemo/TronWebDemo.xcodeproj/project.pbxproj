@@ -25,6 +25,7 @@
 		EF756E3528C4BB71001CBCFC /* TransferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF756E2F28C4BB71001CBCFC /* TransferViewController.swift */; };
 		EF756E3628C4BB71001CBCFC /* ResetTronWebPrivateKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF756E3028C4BB71001CBCFC /* ResetTronWebPrivateKeyViewController.swift */; };
 		EFAA55172C0B32E200FF0C27 /* GetChainParametersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFAA55162C0B32E200FF0C27 /* GetChainParametersViewController.swift */; };
+		EFDCC30C2C9464580090EA8D /* ImportAccountFromPrivateKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDCC30B2C9464580090EA8D /* ImportAccountFromPrivateKeyViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,7 @@
 		EF756E2F28C4BB71001CBCFC /* TransferViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferViewController.swift; sourceTree = "<group>"; };
 		EF756E3028C4BB71001CBCFC /* ResetTronWebPrivateKeyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetTronWebPrivateKeyViewController.swift; sourceTree = "<group>"; };
 		EFAA55162C0B32E200FF0C27 /* GetChainParametersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChainParametersViewController.swift; sourceTree = "<group>"; };
+		EFDCC30B2C9464580090EA8D /* ImportAccountFromPrivateKeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportAccountFromPrivateKeyViewController.swift; sourceTree = "<group>"; };
 		F9FC7C20A4E7A1FBB82E2919 /* Pods-TronWebDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TronWebDemo.debug.xcconfig"; path = "Target Support Files/Pods-TronWebDemo/Pods-TronWebDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -111,6 +113,7 @@
 				EF388D7F2C0B8B7300F0D495 /* GetAccountResourcesViewController.swift */,
 				EF4D0BF12ABBF50E005CC164 /* CreateRandomViewController.swift */,
 				EF4D0BF32ABBF54C005CC164 /* ImportAccountFromMnemonicViewController.swift */,
+				EFDCC30B2C9464580090EA8D /* ImportAccountFromPrivateKeyViewController.swift */,
 				EF4D0BF72ABBF594005CC164 /* CreateAccountViewController.swift */,
 				EF756E2D28C4BB71001CBCFC /* GetBalanceViewController.swift */,
 				EF756E3028C4BB71001CBCFC /* ResetTronWebPrivateKeyViewController.swift */,
@@ -254,6 +257,7 @@
 				EF4D0BF82ABBF594005CC164 /* CreateAccountViewController.swift in Sources */,
 				EF756E3228C4BB71001CBCFC /* Utils.swift in Sources */,
 				EF756E3328C4BB71001CBCFC /* GetBalanceViewController.swift in Sources */,
+				EFDCC30C2C9464580090EA8D /* ImportAccountFromPrivateKeyViewController.swift in Sources */,
 				EF756E3528C4BB71001CBCFC /* TransferViewController.swift in Sources */,
 				EF756E3128C4BB71001CBCFC /* GetAccountViewController.swift in Sources */,
 				EF39E76828C326AE005CD817 /* AppDelegate.swift in Sources */,

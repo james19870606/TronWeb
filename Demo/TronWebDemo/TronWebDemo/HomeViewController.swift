@@ -11,6 +11,7 @@ enum OperationType: String, CaseIterable {
     case createRandom
     case createAccount
     case importAccountFromMnemonic
+    case importAccountFromPrivateKey
     case trxTransfer
     case trc20Transfer
     case getTRC20TokenBalance
@@ -73,6 +74,8 @@ extension HomeViewController: UITableViewDelegate {
             navigationController?.pushViewController(CreateAccountViewController(), animated: true)
         case .importAccountFromMnemonic:
             navigationController?.pushViewController(ImportAccountFromMnemonicViewController(), animated: true)
+        case .importAccountFromPrivateKey:
+            navigationController?.pushViewController(ImportAccountFromPrivateKeyViewController(), animated: true)
         case .trxTransfer:
             let vc = TransferViewController(chainType, .trx)
             navigationController?.pushViewController(vc, animated: true)

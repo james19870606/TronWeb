@@ -38,7 +38,7 @@ public class TronWeb3: NSObject {
     var webView: WKWebView!
     var bridge: WKWebViewJavascriptBridge!
     public var isGenerateTronWebInstanceSuccess: Bool = false
-    var onCompleted: ((Bool,String) -> Void)?
+    var onCompleted: ((Bool, String) -> Void)?
     var showLog: Bool = true
     override public init() {
         super.init()
@@ -46,14 +46,14 @@ public class TronWeb3: NSObject {
         self.webView = WKWebView(frame: .zero, configuration: webConfiguration)
         self.webView.navigationDelegate = self
         self.webView.configuration.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
-        self.bridge = WKWebViewJavascriptBridge(webView: self.webView,isHookConsole: false)
+        self.bridge = WKWebViewJavascriptBridge(webView: self.webView, isHookConsole: false)
     }
 
     deinit {
         print("\(type(of: self)) release")
     }
 
-    public func setup(showLog: Bool = true, privateKey: String? = "", apiKey: String? = TRONApiKey, node: String = TRONNileNet, onCompleted: ((Bool,String) -> Void)? = nil) {
+    public func setup(showLog: Bool = true, privateKey: String? = "", apiKey: String? = TRONApiKey, node: String = TRONNileNet, onCompleted: ((Bool, String) -> Void)? = nil) {
         self.onCompleted = onCompleted
         self.showLog = showLog
         #if !DEBUG
@@ -84,8 +84,7 @@ public class TronWeb3: NSObject {
                 return
             }
             if self.showLog { print("response = \(String(describing: response))") }
-            if let state = temp["state"] as? Bool, state
-            {
+            if let state = temp["state"] as? Bool, state {
                 self.isGenerateTronWebInstanceSuccess = true
                 onCompleted?(state, "")
             } else if let error = temp["error"] as? String {
@@ -93,7 +92,7 @@ public class TronWeb3: NSObject {
                 onCompleted?(false, error)
             } else {
                 self.isGenerateTronWebInstanceSuccess = false
-                onCompleted?(false,"Unknown response format")
+                onCompleted?(false, "Unknown response format")
             }
         }
     }
@@ -116,22 +115,22 @@ public class TronWeb3: NSObject {
 
     // MARK: 獲取trx餘額
 
-    public func getRTXBalance(address: String, onCompleted: ((Bool, String,String) -> Void)? = nil) {
+    public func getRTXBalance(address: String, onCompleted: ((Bool, String, String) -> Void)? = nil) {
         let params: [String: String] = ["address": address]
         self.bridge.call(handlerName: "getTRXBalance", data: params) { response in
             if self.showLog { print("response = \(String(describing: response))") }
             guard let temp = response as? [String: Any] else {
-                onCompleted?(false, "",  "Invalid response format")
+                onCompleted?(false, "", "Invalid response format")
                 return
             }
             if let state = temp["state"] as? Bool, state,
                let balance = temp["result"] as? String
             {
-                onCompleted?(state,  balance, "")
+                onCompleted?(state, balance, "")
             } else if let error = temp["error"] as? String {
-                onCompleted?(false, "",  error)
+                onCompleted?(false, "", error)
             } else {
-                onCompleted?(false, "",  "Unknown response format")
+                onCompleted?(false, "", "Unknown response format")
             }
         }
     }
@@ -141,26 +140,26 @@ public class TronWeb3: NSObject {
     public func getTRC20TokenBalance(address: String,
                                      trc20ContractAddress: String,
                                      decimalPoints: Double,
-                                     onCompleted: ((Bool, String,String) -> Void)? = nil)
+                                     onCompleted: ((Bool, String, String) -> Void)? = nil)
     {
         let params: [String: Any] = ["address": address,
                                      "trc20ContractAddress": trc20ContractAddress,
                                      "decimalPoints": decimalPoints]
         self.bridge.call(handlerName: "getTRC20TokenBalance", data: params) { response in
             if self.showLog { print("response = \(String(describing: response))") }
-            
+
             guard let temp = response as? [String: Any] else {
-                onCompleted?(false, "",  "Invalid response format")
+                onCompleted?(false, "", "Invalid response format")
                 return
             }
             if let state = temp["state"] as? Bool, state,
                let balance = temp["result"] as? String
             {
-                onCompleted?(state,  balance, "")
+                onCompleted?(state, balance, "")
             } else if let error = temp["error"] as? String {
-                onCompleted?(false, "",  error)
+                onCompleted?(false, "", error)
             } else {
-                onCompleted?(false, "",  "Unknown response format")
+                onCompleted?(false, "", "Unknown response format")
             }
         }
     }
@@ -170,28 +169,29 @@ public class TronWeb3: NSObject {
     public func trxTransferWithRemark(remark: String,
                                       toAddress: String,
                                       amount: String,
-                                      onCompleted: ((Bool, String,String) -> Void)? = nil)
+                                      onCompleted: ((Bool, String, String) -> Void)? = nil)
     {
-        let params: [String: String] = ["toAddress": toAddress,
-                                        "amount": amount,
-                                        "remark": remark]
+        let number = Int64(doubleValue(string: amount) * pow(10, 6))
+        let params: [String: Any] = ["toAddress": toAddress,
+                                     "amount": number,
+                                     "remark": remark]
         self.bridge.call(handlerName: "trxTransferWithRemark", data: params) { response in
             if self.showLog { print("response = \(String(describing: response))") }
             guard let temp = response as? [String: Any] else {
                 onCompleted?(false, "", "Invalid response format")
                 return
             }
-            
+
             if let state = temp["result"] as? Bool, state,
                let txid = temp["txid"] as? String
             {
                 onCompleted?(state, txid, "")
             } else if let error = temp["error"] as? String {
-                onCompleted?(false,"", error)
-            } else if let code = temp["code"] as? String,let txid = temp["txid"] as? String {
-                onCompleted?(false,txid,code)
+                onCompleted?(false, "", error)
+            } else if let code = temp["code"] as? String, let txid = temp["txid"] as? String {
+                onCompleted?(false, txid, code)
             } else {
-                onCompleted?(false, "","Unknown response format")
+                onCompleted?(false, "", "Unknown response format")
             }
         }
     }
@@ -200,28 +200,28 @@ public class TronWeb3: NSObject {
 
     public func trxTransfer(toAddress: String,
                             amount: String,
-                            onCompleted: ((Bool, String,String) -> Void)? = nil)
+                            onCompleted: ((Bool, String, String) -> Void)? = nil)
     {
         let params: [String: String] = ["toAddress": toAddress,
                                         "amount": amount]
         self.bridge.call(handlerName: "trxTransfer", data: params) { response in
             if self.showLog { print("response = \(String(describing: response))") }
-            
+
             guard let temp = response as? [String: Any] else {
                 onCompleted?(false, "", "Invalid response format")
                 return
             }
-            
+
             if let state = temp["result"] as? Bool, state,
                let txid = temp["txid"] as? String
             {
                 onCompleted?(state, txid, "")
             } else if let error = temp["error"] as? String {
-                onCompleted?(false,"", error)
-            } else if let code = temp["code"] as? String,let txid = temp["txid"] as? String {
-                onCompleted?(false,txid,code)
+                onCompleted?(false, "", error)
+            } else if let code = temp["code"] as? String, let txid = temp["txid"] as? String {
+                onCompleted?(false, txid, code)
             } else {
-                onCompleted?(false, "","Unknown response format")
+                onCompleted?(false, "", "Unknown response format")
             }
         }
     }
@@ -231,46 +231,49 @@ public class TronWeb3: NSObject {
     public func trc20TokenTransfer(toAddress: String,
                                    trc20ContractAddress: String,
                                    amount: String,
+                                   decimalPoints: Double = 6,
                                    remark: String,
                                    feeLimit: String = "100000000",
-                                   onCompleted: ((Bool, String,String) -> Void)? = nil)
+                                   onCompleted: ((Bool, String, String) -> Void)? = nil)
     {
-        let params: [String: String] = ["trc20ContractAddress": trc20ContractAddress,
-                                        "toAddress": toAddress,
-                                        "amount": amount,
-                                        "feeLimit": feeLimit,
-                                        "remark": remark]
+        let number = Int64(doubleValue(string: amount) * pow(10, decimalPoints))
+        let params: [String: Any] = ["trc20ContractAddress": trc20ContractAddress,
+                                     "toAddress": toAddress,
+                                     "amount": number,
+                                     "feeLimit": feeLimit,
+                                     "remark": remark]
         self.bridge.call(handlerName: "tokenTransfer", data: params) { response in
             if self.showLog { print("response = \(String(describing: response))") }
             guard let temp = response as? [String: Any] else {
                 onCompleted?(false, "", "Invalid response format")
                 return
             }
-            
+
             if let state = temp["result"] as? Bool, state,
                let txid = temp["txid"] as? String
             {
                 onCompleted?(state, txid, "")
             } else if let error = temp["error"] as? String {
-                onCompleted?(false,"", error)
-            } else if let code = temp["code"] as? String,let txid = temp["txid"] as? String {
-                onCompleted?(false,txid,code)
+                onCompleted?(false, "", error)
+            } else if let code = temp["code"] as? String, let txid = temp["txid"] as? String {
+                onCompleted?(false, txid, code)
             } else {
-                onCompleted?(false, "","Unknown response format")
+                onCompleted?(false, "", "Unknown response format")
             }
         }
     }
-    
+
     // MARK: trc20代幣轉帳estimateEnergy
-    public func estimateEnergy(url:String,toAddress: String,
-                                   trc20ContractAddress: String,
-                                   amount: String,
-                               onCompleted: ((Bool, [String:Any],String) -> Void)? = nil)
+
+    public func estimateEnergy(url: String, toAddress: String,
+                               trc20ContractAddress: String,
+                               amount: String,
+                               onCompleted: ((Bool, [String: Any], String) -> Void)? = nil)
     {
-        let params: [String: Any] = ["url":url,
+        let params: [String: Any] = ["url": url,
                                      "contractAddress": trc20ContractAddress,
-                                      "toAddress": toAddress,
-                                      "amount": amount]
+                                     "toAddress": toAddress,
+                                     "amount": amount]
         self.bridge.call(handlerName: "estimateEnergy", data: params) { response in
             if self.showLog { print("response = \(String(describing: response))") }
             guard let temp = response as? [String: Any] else {
@@ -278,41 +281,43 @@ public class TronWeb3: NSObject {
                 return
             }
             if let state = temp["state"] as? Bool, state,
-               let feeDic = temp["result"] as? [String:Any]
+               let feeDic = temp["result"] as? [String: Any]
             {
                 onCompleted?(state, feeDic, "")
             } else if let error = temp["error"] as? String {
-                onCompleted?(false,[:], error)
-            }  else {
-                onCompleted?(false,[:],"Unknown response format")
+                onCompleted?(false, [:], error)
+            } else {
+                onCompleted?(false, [:], "Unknown response format")
             }
         }
     }
+
     // MARK: trx轉帳estimate Fee
+
     public func estimateTRXTransferFee(toAddress: String,
-                                   amount: String,
+                                       amount: String,
                                        note: String = "",
-                               onCompleted: ((Bool, [String:Any],[String:Any],String) -> Void)? = nil)
+                                       onCompleted: ((Bool, [String: Any], [String: Any], String) -> Void)? = nil)
     {
-        let params: [String: Any] = ["note":note,
-                                      "toAddress": toAddress,
-                                      "amount": amount]
+        let params: [String: Any] = ["note": note,
+                                     "toAddress": toAddress,
+                                     "amount": amount]
         self.bridge.call(handlerName: "estimateTRXFee", data: params) { response in
             if self.showLog { print("response = \(String(describing: response))") }
             guard let temp = response as? [String: Any] else {
-                onCompleted?(false, [:],[:], "Invalid response format")
+                onCompleted?(false, [:], [:], "Invalid response format")
                 return
             }
-            
+
             if let state = temp["state"] as? Bool, state,
-               let sendAccountResources = temp["sendAccountResources"] as? [String:Any],
-               let feeDic = temp["result"] as? [String:Any]
+               let sendAccountResources = temp["sendAccountResources"] as? [String: Any],
+               let feeDic = temp["result"] as? [String: Any]
             {
-                onCompleted?(state,sendAccountResources,feeDic, "")
+                onCompleted?(state, sendAccountResources, feeDic, "")
             } else if let error = temp["error"] as? String {
-                onCompleted?(false,[:],[:], error)
-            }  else {
-                onCompleted?(false,[:],[:],"Unknown response format")
+                onCompleted?(false, [:], [:], error)
+            } else {
+                onCompleted?(false, [:], [:], "Unknown response format")
             }
         }
     }
@@ -343,9 +348,10 @@ public class TronWeb3: NSObject {
             onCompleted?(data)
         }
     }
-    
+
     // MARK: getChainParameters
-    public func getChainParameters(onCompleted: ((Bool,[[String: Any]],String) -> Void)? = nil) {
+
+    public func getChainParameters(onCompleted: ((Bool, [[String: Any]], String) -> Void)? = nil) {
         self.bridge.call(handlerName: "getChainParameters") { response in
             if self.showLog { print("response = \(String(describing: response))") }
             guard let temp = response as? [String: Any] else {
@@ -353,16 +359,18 @@ public class TronWeb3: NSObject {
                 return
             }
             if let state = temp["state"] as? Bool, state,
-               let result = temp["result"] as? [[String: Any]] {
-                onCompleted?(state,result,"")
+               let result = temp["result"] as? [[String: Any]]
+            {
+                onCompleted?(state, result, "")
             } else {
                 onCompleted?(false, [[:]], "Invalid response format")
             }
         }
     }
-    
+
     // MARK: getAccountResources
-    public func getAccountResources(address: String,onCompleted: ((Bool,[String: Any],String) -> Void)? = nil) {
+
+    public func getAccountResources(address: String, onCompleted: ((Bool, [String: Any], String) -> Void)? = nil) {
         let params: [String: String] = ["address": address]
         self.bridge.call(handlerName: "getAccountResources", data: params) { response in
             if self.showLog { print("response = \(String(describing: response))") }
@@ -371,15 +379,17 @@ public class TronWeb3: NSObject {
                 return
             }
             if let state = temp["state"] as? Bool, state,
-               let result = temp["result"] as? [String: Any] {
-                onCompleted?(state,result,"")
+               let result = temp["result"] as? [String: Any]
+            {
+                onCompleted?(state, result, "")
             } else {
                 onCompleted?(false, [:], "Invalid response format")
             }
         }
     }
-    
+
     // MARK: createRandom
+
     public func createRandom(onCompleted: ((Bool, String, String, String, String, String) -> Void)? = nil) {
         let params = [String: String]()
         self.bridge.call(handlerName: "createRandom", data: params) { response in
@@ -404,7 +414,9 @@ public class TronWeb3: NSObject {
             }
         }
     }
+
     // MARK: createAccount
+
     public func createAccount(onCompleted: ((Bool, String, String, String, String, String) -> Void)? = nil) {
         let params = [String: String]()
         self.bridge.call(handlerName: "createAccount", data: params) { response in
@@ -421,7 +433,7 @@ public class TronWeb3: NSObject {
                let base58Address = temp["base58Address"] as? String,
                let hexAddress = temp["hexAddress"] as? String
             {
-                onCompleted?(state, hexAddress,base58Address, privateKey, publicKey, "")
+                onCompleted?(state, hexAddress, base58Address, privateKey, publicKey, "")
             } else if let error = temp["error"] as? String {
                 onCompleted?(false, "", "", "", "", error)
             } else {
@@ -429,8 +441,8 @@ public class TronWeb3: NSObject {
             }
         }
     }
-    
-    public func importAccountFromMnemonic(mnemonic:String,onCompleted: ((Bool, String, String, String, String) -> Void)? = nil) {
+
+    public func importAccountFromMnemonic(mnemonic: String, onCompleted: ((Bool, String, String, String, String) -> Void)? = nil) {
         let params: [String: String] = ["mnemonic": mnemonic]
 
         self.bridge.call(handlerName: "importAccountFromMnemonic", data: params) { response in
@@ -452,5 +464,36 @@ public class TronWeb3: NSObject {
                 onCompleted?(false, "", "", "", "Unknown response format")
             }
         }
+    }
+    
+    public func importAccountFromPrivateKey(privateKey: String, onCompleted: ((Bool, String, String, String) -> Void)? = nil) {
+        let params: [String: String] = ["privateKey": privateKey]
+
+        self.bridge.call(handlerName: "importAccountFromPrivateKey", data: params) { response in
+            if self.showLog { print("response = \(String(describing: response))") }
+
+            guard let temp = response as? [String: Any] else {
+                onCompleted?(false, "", "", "Invalid response format")
+                return
+            }
+            if let state = temp["state"] as? Bool, state,
+               let base58 = temp["base58"] as? String,
+               let hex = temp["hex"] as? String
+            {
+                onCompleted?(state, base58, hex, "")
+            } else if let error = temp["error"] as? String {
+                onCompleted?(false, "", "", error)
+            } else {
+                onCompleted?(false, "", "", "Unknown response format")
+            }
+        }
+    }
+}
+
+extension TronWeb3 {
+    private func doubleValue(string: String) -> Double {
+        let decima = NSDecimalNumber(string: string.count == 0 ? "0" : string)
+        let doubleValue = Double(truncating: decima as NSNumber)
+        return doubleValue
     }
 }
