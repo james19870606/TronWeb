@@ -1,0 +1,49 @@
+# Xcode
+*.xcworkspace
+*.xcuserstate
+*.xcuserdatad
+*.xcuserdata
+*.xccheckout
+*.xcschemes
+*.xcscheme
+*.moved-aside
+DerivedData/
+*.hmap
+*.ipa
+*.dSYM/
+*.xcassets/
+
+# CocoaPods
+Pods/
+
+# Carthage
+Carthage/Build/
+
+# Swift Package Manager
+.build/
+Package.resolved
+
+# Xcode specific files
+*.xcuserstate
+*.xcuserdata/
+*.xcuserdatad/
+*.moved-aside/
+*.xccheckout
+*.xcschemes
+*.xcscheme
+
+# Build results
+build/
+Debug/
+Release/
+
+# User-specific files
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
