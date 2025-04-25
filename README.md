@@ -203,4 +203,4 @@ tronWeb.estimateEnergy(url:chainType == .main ? TRONMainNet : TRONNileNet, toAdd
 
 ## License
 
-TronWeb is released under the MIT license. [See LICENSE](https://github.com/james19870606/TronWeb/blob/master/LICENSE) for details.
+TronWeb is released under the MIT license. [See LICENSE](https://github.com/james19870606/TronWeb/blob/master/LICENSE) for details .
