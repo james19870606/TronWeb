@@ -463,6 +463,50 @@ public class TronWeb3: NSObject {
         }
     }
     
+    public func signMessageV2(message: String,privateKey: String, onCompleted: ((Bool, String, String) -> Void)? = nil) {
+        let params: [String: String] = ["message": message,"privateKey": privateKey]
+
+        self.bridge.call(handlerName: "signMessageV2", data: params) { response in
+            if self.showLog { print("response = \(String(describing: response))") }
+
+            guard let temp = response as? [String: Any] else {
+                onCompleted?(false, "","Invalid response format")
+                return
+            }
+            if let state = temp["state"] as? Bool, state,
+               let signature = temp["result"] as? String
+            {
+                onCompleted?(state, signature,"")
+            } else if let error = temp["error"] as? String {
+                onCompleted?(false, "", error)
+            } else {
+                onCompleted?(false, "","Unknown response format")
+            }
+        }
+    }
+    
+    public func verifyMessageV2(message: String,signature: String, onCompleted: ((Bool, String, String) -> Void)? = nil) {
+        let params: [String: String] = ["message": message,"signature": signature]
+
+        self.bridge.call(handlerName: "verifyMessageV2", data: params) { response in
+            if self.showLog { print("response = \(String(describing: response))") }
+
+            guard let temp = response as? [String: Any] else {
+                onCompleted?(false, "", "Invalid response format")
+                return
+            }
+            if let state = temp["state"] as? Bool, state,
+               let base58Address = temp["base58Address"] as? String
+            {
+                onCompleted?(state, base58Address,"")
+            }else if let error = temp["error"] as? String {
+                onCompleted?(false, "", error)
+            } else {
+                onCompleted?(false,"", "Unknown response format")
+            }
+        }
+    }
+    
     public func importAccountFromPrivateKey(privateKey: String, onCompleted: ((Bool, String, String, String) -> Void)? = nil) {
         let params: [String: String] = ["privateKey": privateKey]
 

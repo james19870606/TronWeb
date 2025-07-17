@@ -19,6 +19,8 @@ enum OperationType: String, CaseIterable {
     case getChainParameters // 取得鏈結參數，例如1000個能量價值
     case getAccountResources // Get the account's bandwidth and energy resources.
     case getAccount // 用來判斷是否地址是否啟動（上鏈）
+    case signMessageV2 // Sign a plaintext string
+    case verifyMessageV2 // Sign a plaintext string
     case resetTronWebPrivateKey  // 多錢包切換需要重新設定TronWebPrivateKey
 }
 
@@ -97,6 +99,10 @@ extension HomeViewController: UITableViewDelegate {
         case .getAccountResources:
             let vc = GetAccountResourcesViewController(chainType,operationType)
             navigationController?.pushViewController(vc, animated: true)
+        case .signMessageV2:
+            navigationController?.pushViewController(SignMessageV2ViewController(), animated: true)
+        case .verifyMessageV2:
+            navigationController?.pushViewController(VerifyMessageV2ViewController(), animated: true)
         }
     }
 }

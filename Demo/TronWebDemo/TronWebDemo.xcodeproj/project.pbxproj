@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0480F7F22E29052700FBB5B0 /* SignMessageV2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0480F7F12E29052700FBB5B0 /* SignMessageV2ViewController.swift */; };
+		0480F7F42E29178400FBB5B0 /* VerifyMessageV2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0480F7F32E29178400FBB5B0 /* VerifyMessageV2ViewController.swift */; };
 		0BDB4BB8BAE992315B29EE38 /* Pods_TronWebDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B6040A00D457D5064447BB /* Pods_TronWebDemo.framework */; };
 		EF388D802C0B8B7300F0D495 /* GetAccountResourcesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF388D7F2C0B8B7300F0D495 /* GetAccountResourcesViewController.swift */; };
 		EF388D842C0C762500F0D495 /* FeeEstimateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF388D832C0C762500F0D495 /* FeeEstimateView.swift */; };
@@ -29,6 +31,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0480F7F12E29052700FBB5B0 /* SignMessageV2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignMessageV2ViewController.swift; sourceTree = "<group>"; };
+		0480F7F32E29178400FBB5B0 /* VerifyMessageV2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyMessageV2ViewController.swift; sourceTree = "<group>"; };
 		84730152913928A9A721AFB3 /* Pods-TronWebDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TronWebDemo.release.xcconfig"; path = "Target Support Files/Pods-TronWebDemo/Pods-TronWebDemo.release.xcconfig"; sourceTree = "<group>"; };
 		88B6040A00D457D5064447BB /* Pods_TronWebDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TronWebDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF388D7F2C0B8B7300F0D495 /* GetAccountResourcesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountResourcesViewController.swift; sourceTree = "<group>"; };
@@ -116,6 +120,8 @@
 				EFDCC30B2C9464580090EA8D /* ImportAccountFromPrivateKeyViewController.swift */,
 				EF4D0BF72ABBF594005CC164 /* CreateAccountViewController.swift */,
 				EF756E2D28C4BB71001CBCFC /* GetBalanceViewController.swift */,
+				0480F7F12E29052700FBB5B0 /* SignMessageV2ViewController.swift */,
+				0480F7F32E29178400FBB5B0 /* VerifyMessageV2ViewController.swift */,
 				EF756E3028C4BB71001CBCFC /* ResetTronWebPrivateKeyViewController.swift */,
 				EF756E2C28C4BB71001CBCFC /* Utils.swift */,
 				EF388D832C0C762500F0D495 /* FeeEstimateView.swift */,
@@ -216,9 +222,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TronWebDemo/Pods-TronWebDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TronWebDemo/Pods-TronWebDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -265,7 +275,9 @@
 				EF4D0BF22ABBF50E005CC164 /* CreateRandomViewController.swift in Sources */,
 				EF756E3428C4BB71001CBCFC /* HomeViewController.swift in Sources */,
 				EF388D802C0B8B7300F0D495 /* GetAccountResourcesViewController.swift in Sources */,
+				0480F7F22E29052700FBB5B0 /* SignMessageV2ViewController.swift in Sources */,
 				EF39E76A28C326AE005CD817 /* SceneDelegate.swift in Sources */,
+				0480F7F42E29178400FBB5B0 /* VerifyMessageV2ViewController.swift in Sources */,
 				EF4D0BF42ABBF54C005CC164 /* ImportAccountFromMnemonicViewController.swift in Sources */,
 				EFAA55172C0B32E200FF0C27 /* GetChainParametersViewController.swift in Sources */,
 				EF388D842C0C762500F0D495 /* FeeEstimateView.swift in Sources */,

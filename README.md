@@ -198,6 +198,31 @@ tronWeb.estimateEnergy(url:chainType == .main ? TRONMainNet : TRONNileNet, toAdd
         }
 }
 ```
+##### signMessageV2
+```swift
+guard let message = ""
+let privateKey = ""
+tronWeb.signMessageV2 (message: message,privateKey: privateKey){ [weak self] state, signature, error in
+    guard let self = self else { return }
+    if state {
+        signedTextView.text = signature
+    } else {
+        signedTextView.text = error
+    }
+}
+```
+##### verifyMessageV2
+```swift
+guard let signature = ""
+tronWeb.verifyMessageV2(message: "hello world", signature: signature) { [weak self] state, base58Address, error in
+    guard let self = self else { return }
+    if state {
+        verifyTextView.text = base58Address
+    } else {
+        verifyTextView.text = error
+    }
+}
+```
 
 更详细的使用方法,建议参考 [demo](https://github.com/james19870606/TronWeb/tree/main/Demo/TronWebDemo)
 
