@@ -13,7 +13,7 @@ For more specific usage, please refer to the [demo](https://github.com/james1987
 Add this to your [podfile](https://guides.cocoapods.org/using/getting-started.html) and run `pod install` to install:
 
 ```ruby
-pod 'TronWeb', '~> 1.1.8'
+pod 'TronWeb', '~> 1.1.9'
 ```
 ### Swift Package Manager
 The Swift Package Manager  is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
