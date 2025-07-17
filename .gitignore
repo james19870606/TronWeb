@@ -36,6 +36,7 @@ Package.resolved
 build/
 Debug/
 Release/
+.idea/
 
 # User-specific files
 *.swp
