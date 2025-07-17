@@ -10,5 +10,5 @@ target 'TronWebDemo' do
 
   # Pods for TronWebDemo
   pod 'SnapKit', '~> 5.6.0'
-  pod 'TronWeb', '~> 1.1.8'
+#  pod 'TronWeb', '~> 1.1.8'
 end

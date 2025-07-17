@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import TronWeb
+import TronWeb3
 class SignMessageV2ViewController: UIViewController {
 
     lazy var tronWeb: TronWeb3 = {

@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import TronWeb
+import TronWeb3
 
 // Get the account's bandwidth and energy resources.
 

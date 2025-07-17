@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import TronWeb
+import TronWeb3
 
 class VerifyMessageV2ViewController: UIViewController {
 
