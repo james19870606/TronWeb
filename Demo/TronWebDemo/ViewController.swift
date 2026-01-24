@@ -7,7 +7,7 @@
 
 import UIKit
 import SnapKit
-
+import TronWeb
 class ViewController: UIViewController {
 
     // MARK: - Properties
@@ -80,6 +80,7 @@ class ViewController: UIViewController {
     }
     
     @objc private func handleNetworkChanged() {
+       
         NetworkManager.shared.currentNode = networkSegment.selectedSegmentIndex == 0 ? TRONMainNet : TRONNileNet
         print("Network changed to: \(NetworkManager.shared.networkName)")
     }
