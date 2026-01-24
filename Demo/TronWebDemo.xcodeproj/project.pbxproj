@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		04B245B12F209424003931A1 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 04B245B02F209424003931A1 /* SnapKit */; };
-		04B246F32F24BA89003931A1 /* TronWeb in Frameworks */ = {isa = PBXBuildFile; productRef = 04B246F22F24BA89003931A1 /* TronWeb */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,7 +40,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04B246F32F24BA89003931A1 /* TronWeb in Frameworks */,
 				04B245B12F209424003931A1 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -86,7 +84,6 @@
 			name = TronWebDemo;
 			packageProductDependencies = (
 				04B245B02F209424003931A1 /* SnapKit */,
-				04B246F22F24BA89003931A1 /* TronWeb */,
 			);
 			productName = TronWebDemo;
 			productReference = 04B2453C2F208BEF003931A1 /* TronWebDemo.app */;
@@ -118,7 +115,6 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				04B245AF2F209424003931A1 /* XCRemoteSwiftPackageReference "SnapKit" */,
-				04B246F12F24BA89003931A1 /* XCRemoteSwiftPackageReference "TronWeb" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 04B2453D2F208BEF003931A1 /* Products */;
@@ -356,14 +352,6 @@
 				minimumVersion = 5.7.1;
 			};
 		};
-		04B246F12F24BA89003931A1 /* XCRemoteSwiftPackageReference "TronWeb" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/james19870606/TronWeb.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -371,11 +359,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 04B245AF2F209424003931A1 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
-		};
-		04B246F22F24BA89003931A1 /* TronWeb */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 04B246F12F24BA89003931A1 /* XCRemoteSwiftPackageReference "TronWeb" */;
-			productName = TronWeb;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
