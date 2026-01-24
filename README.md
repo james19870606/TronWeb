@@ -6,7 +6,7 @@
 
 ![](Resource/DemoImage01.png)
 
-For more specific usage, please refer to the [demo](https://github.com/james19870606/TronWeb/tree/main/Demo/TronWebDemo)
+For more specific usage, please refer to the [demo](https://github.com/james19870606/TronWeb/tree/main/Demo)
 
 ###Swift Package Manager
 The Swift Package Manager  is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
