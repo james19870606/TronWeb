@@ -1,6 +1,6 @@
 import UIKit
 import SnapKit
-
+import TronWeb
 class GetTRC20BalanceViewController: UIViewController {
 
     // MARK: - Properties 
