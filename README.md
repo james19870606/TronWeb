@@ -2,230 +2,290 @@
 **TronWeb** is an iOS toolbelt for interaction with the Tron network.
 
 ![language](https://img.shields.io/badge/Language-Swift-green)
-[![Support](https://img.shields.io/badge/support-iOS%209%2B%20-FB7DEC.svg?style=flat)](https://www.apple.com/nl/ios/)&nbsp;
 [![CocoaPods](https://img.shields.io/badge/support-SwiftPackageManager-green)](https://www.swift.org/getting-started/#using-the-package-manager)
 
 ![](Resource/DemoImage01.png)
 
 For more specific usage, please refer to the [demo](https://github.com/james19870606/TronWeb/tree/main/Demo/TronWebDemo)
 
-### Installation with CocoaPods
-Add this to your [podfile](https://guides.cocoapods.org/using/getting-started.html) and run `pod install` to install:
-
-```ruby
-pod 'TronWeb', '~> 1.1.9'
-```
-### Swift Package Manager
+###Swift Package Manager
 The Swift Package Manager  is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
 
-Once you have your Swift package set up, adding TronWeb as a dependency is as easy as adding it to the dependencies value of your Package.swift.
 ```ruby
 dependencies: [
-    .package(url: "https://github.com/james19870606/TronWeb.git", .upToNextMajor(from: "1.1.9"))
+    .package(url: "https://github.com/james19870606/TronWeb.git", .upToNextMajor(from: "1.2.0"))
 ]
 ```
-
-### Example usage in CocoaPods
-
+## 1. Usage in Swift Package Manager
 ```swift
-import TronWeb   
+import TronWeb  
 ```
 
-### Example usage in Swift Package Manager
+## 2. Environment Initialization
+
+Before calling any blockchain functionality, you must initialize the `TronWeb` instance. It is recommended to call this in the `viewDidLoad` of your ViewController or within dedicated initialization logic.
 
 ```swift
-import TronWeb3   
-```
+let tronWeb = TronWeb()
 
-##### Setup TronWeb3
-```swift
-let tronWeb = TronWeb3()
-let privateKey = ""
-let TRONApiKey = ""
-if tronWeb.isGenerateTronWebInstanceSuccess != true {
-    tronWeb.setup(privateKey: privateKey, node: chainType == .main ? TRONMainNet : TRONNileNet) { [weak self] setupResult,error in
-        guard let self = self else { return }
-        if setupResult {
-        //......
-        } else { 
-          print(error)
-        }
-    }
-} else {
-        //......
-
+// Initialization parameters:
+// - privateKey: Initial private key (optional, defaults to "01" for initialization)
+// - node: Node address (TRONMainNet or TRONNileNet)
+// - apiKey: Trongrid API Key
+do {
+    try await tronWeb.setupAsync(
+        privateKey: "your_private_key", 
+        apiKey: "your_api_key",
+        node: TRONNileNet // Testnet
+    )
+    print("TronWeb initialized successfully")
+} catch {
+    print("Initialization failed: \(error.localizedDescription)")
 }
 ```
-##### Create Random
+
+---
+
+## 3. Core Functionality Examples
+
+### 3.1 Account Management
+
+#### Generate Random Wallet (including mnemonic)
 ```swift
-tronWeb.createRandom { [weak self] state, address, privateKey, publicKey, mnemonic, error in
-    guard let self = self else { return }
-    self.createRandomBtn.isEnabled = true
-    tipLabel.text = "create finished."
-    if state {
-        let text =
-            "address: " + address + "\n\n" +
-            "mnemonic: " + mnemonic + "\n\n" +
-            "privateKey: " + privateKey + "\n\n" +
-            "publicKey: " + publicKey
-        walletDetailTextView.text = text
+// wordCount: 12, 15, 18, 21, 24
+// language: "english", "chinese_simplified", etc.
+if let wallet = await tronWeb.createRandomAsync(wordCount: 12, language: "english") {
+    let mnemonic = wallet["mnemonic"] as? String
+    let privateKey = wallet["privateKey"] as? String
+    let address = (wallet["address"] as? [String: Any])?["base58"] as? String
+    print("Mnemonic: \(mnemonic ?? "")")
+}
+```
+
+#### Import Mnemonic
+```swift
+if let wallet = await tronWeb.importAccountFromMnemonicAsync(mnemonic: "your mnemonic phrase...") {
+    if let success = wallet["success"] as? Bool, success {
+        let address = (wallet["address"] as? [String: Any])?["base58"] as? String
+        print("Import successful: \(address ?? "")")
+    }
+}
+```
+
+#### Query TRX Balance
+```swift
+if let result = await tronWeb.getTRXBalanceAsync(address: "T...") {
+    let balance = result["balance"] as? String // Unit is TRX
+    print("Balance: \(balance ?? "0") TRX")
+}
+```
+
+---
+
+### 3.2 Basic Transfer (Single-Sig)
+
+#### TRX Transfer
+```swift
+let toAddress = "T..."
+let amount: Double = 1.5 // 1.5 TRX
+let privateKey = "..."
+
+if let result = await tronWeb.trxTransferAsync(toAddress: toAddress, amount: amount, privateKey: privateKey) {
+    if let success = result["success"] as? Bool, success {
+        let txid = result["txid"] as? String
+        print("Transfer successful, TXID: \(txid ?? "")")
     } else {
-        walletDetailTextView.text = error
-    }
-}
-```
-##### Create Account
-```swift
-tronWeb.createAccount { [weak self] state, base58Address, hexAddress, privateKey, publicKey, error in
-    guard let self = self else { return }
-    self.createAccountBtn.isEnabled = true
-    tipLabel.text = "create finished."
-    if state {
-        let text =
-            "base58Address: " + base58Address + "\n\n" +
-            "hexAddress: " + hexAddress + "\n\n" +
-            "privateKey: " + privateKey + "\n\n" +
-            "publicKey: " + publicKey
-        walletDetailTextView.text = text
-    } else {
-        walletDetailTextView.text = error
+        let error = result["error"] as? String
+        print("Transfer failed: \(error ?? "Unknown error")")
     }
 }
 ```
 
-##### Import Account From Mnemonic
+#### TRC20 Token Transfer
 ```swift
-tronWeb.importAccountFromMnemonic (mnemonic: mnemonic){ [weak self] state, address, privateKey, publicKey, error in
-    guard let self = self else { return }
-    self.importAccountFromMnemonicBtn.isEnabled = true
-    tipLabel.text = "import finished."
-    if state {
-        let text =
-            "address: " + address + "\n\n" +
-            "privateKey: " + privateKey + "\n\n" +
-            "publicKey: " + publicKey
-        walletDetailTextView.text = text
-    } else {
-        walletDetailTextView.text = error
-    }
-}
-```
-##### Import Account From PrivateKey
-```swift
-tronWeb.importAccountFromPrivateKey (privateKey: privateKey){ [weak self] state, base58, hex, error in
-    guard let self = self else { return }
-    self.importAccountFromPrivateKeyBtn.isEnabled = true
-    tipLabel.text = "import finished."
-    if state {
-        let text =
-            "base58: " + base58 + "\n\n" +
-            "hex: " + hex
-        walletDetailTextView.text = text
-    } else {
-        walletDetailTextView.text = error
-    }
-}
-```
-##### Send TRX
-```swift
-let remark = ""
-let toAddress = ""
-let amountText = "1" // This value is 0.000001 
-tronWeb.trxTransferWithRemark(remark: remark,
-                                      toAddress: toAddress,
-                                      amount: amountText){ [weak self] (state, txid,error) in
-    guard let self = self else { return }
-    print("state = \(state)")
-    print("txid = \(txid)")
-    if (state) {
-        self.hashLabel.text = txid
-    } else {
-        self.hashLabel.text = error
-    }
-}
-```
-##### Send TRC20
-```swift
-let remark = ""
-let toAddress = ""
-let amountText = "1" // This value is 0.000001 
-let trc20Address = ""
-tronWeb.trc20TokenTransfer(toAddress: toAddress,
-                           trc20ContractAddress: trc20Address, amount: amountText,
-                           remark: remark,
-                           feeLimit: "100000000") { [weak self] (state, txid,error) in
-    guard let self = self else { return }
-    print("state = \(state)")
-    print("txid = \(txid)")
-    if (state) {
-        self.hashLabel.text = txid
-    } else {
-        self.hashLabel.text = error
+let contract = "T..." // Token contract address (e.g., USDT)
+let toAddress = "T..."
+let amount: Double = 100.0 
+let privateKey = "..."
+
+if let result = await tronWeb.trc20TransferAsync(contractAddress: contract, toAddress: toAddress, amount: amount, privateKey: privateKey) {
+    if let success = result["success"] as? Bool, success {
+        let txid = result["txid"] as? String
+        print("Token transfer successful, TXID: \(txid ?? "")")
     }
 }
 ```
 
-##### Estimate Fee when Send TRX
-```swift
-let toAddress = reviceAddressField.text,
-let amountText = amountTextField.text else { return}
-let remark = remarkTextView.text ?? ""
-tronWeb.estimateTRXTransferFee(toAddress: toAddress, amount: amountText,note: remark){ (state,sendAccountResources,feeDic,error) in
-        if state {
-        
-        } else {
-            
-        }
- }
-```
+---
 
-##### Estimate Fee when Send TRC20
+### 3.3 Multi-Signature (Multi-Sig)
+
+#### Upgrade to Multi-Sig Account
+Configuring a regular account as multi-sig requires specifying a list of owners and a threshold.
 ```swift
-let toAddress = ""
-let amountText = amountTextField.text
-let trc20Address = self.trc20AddressTextField.text 
-tronWeb.estimateEnergy(url:chainType == .main ? TRONMainNet : TRONNileNet, toAddress: toAddress, trc20ContractAddress: trc20Address, amount: amountText) { (state,feeDic,error) in
-        if state {
-              /*
-                feeDic =     {
-                    energyFee = 420;
-                    "energy_used" = 4146;
-                    feeLimit = "1.74132";
-                };
-               */
-        } else {
-            
-        }
-}
-```
-##### signMessageV2
-```swift
-guard let message = ""
-let privateKey = ""
-tronWeb.signMessageV2 (message: message,privateKey: privateKey){ [weak self] state, signature, error in
-    guard let self = self else { return }
-    if state {
-        signedTextView.text = signature
-    } else {
-        signedTextView.text = error
-    }
-}
-```
-##### verifyMessageV2
-```swift
-guard let signature = ""
-tronWeb.verifyMessageV2(message: "hello world", signature: signature) { [weak self] state, base58Address, error in
-    guard let self = self else { return }
-    if state {
-        verifyTextView.text = base58Address
-    } else {
-        verifyTextView.text = error
+let ownerAddress = "T..." // Account to be upgraded
+let owners = ["T_Addr1", "T_Addr2", "T_Addr3"]
+let threshold = 2
+let privateKey = "..." // Current account's private key
+
+if let result = await tronWeb.createMultiSigAddressAsync(
+    ownerAddress: ownerAddress,
+    owners: owners,
+    required: threshold,
+    privateKey: privateKey
+) {
+    if let success = result["success"] as? Bool, success {
+        print("Multi-sig configured successfully, TXID: \(result["txid"] ?? "")")
     }
 }
 ```
 
-更详细的使用方法,建议参考 [demo](https://github.com/james19870606/TronWeb/tree/main/Demo/TronWebDemo)
+#### Multi-Sig TRX Transfer
+```swift
+let fromAddress = "T..." // Multi-sig account address
+let privateKeys = ["pk1", "pk2"] // List of private keys meeting the threshold
+let permissionId = 2 // Active Permission ID
 
+if let result = await tronWeb.multiSigTrxTransferAsync(
+    fromAddress: fromAddress,
+    toAddress: "T...",
+    amount: 10.0,
+    privateKeys: privateKeys,
+    permissionId: permissionId
+) {
+    if let success = result["success"] as? Bool, success {
+        print("Multi-sig transfer successful")
+    }
+}
+```
+
+#### Multi-Sig TRC20 Transfer
+```swift
+let contractAddress = "T..." // TRC20 contract address
+let fromAddress = "T..."     // Multi-sig account address
+let toAddress = "T..."
+let amount: Double = 100.0   // Transfer amount
+let privateKeys = ["pk1", "pk2"] // List of private keys meeting the threshold
+let permissionId = 2         // Active Permission ID
+
+if let result = await tronWeb.multiSigTrc20TransferAsync(
+    contractAddress: contractAddress,
+    fromAddress: fromAddress,
+    toAddress: toAddress,
+    amount: amount,
+    privateKeys: privateKeys,
+    permissionId: permissionId
+) {
+    if let success = result["success"] as? Bool, success {
+        let txid = result["txid"] as? String
+        print("Multi-sig token transfer successful, TXID: \(txid ?? "")")
+    } else {
+        let error = result["error"] as? String
+        print("Multi-sig token transfer failed: \(error ?? "")")
+    }
+}
+```
+
+---
+
+### 3.4 Resource Staking (Stake 2.0)
+
+#### Stake TRX to Obtain Resources
+```swift
+// resourceType: "ENERGY" or "BANDWIDTH"
+if let result = await tronWeb.freezeBalanceAsync(amount: 100, resourceType: "ENERGY", privateKey: "...") {
+    if let success = result["success"] as? Bool, success {
+        print("Stake successful")
+    }
+}
+```
+
+#### Unfreeze Resources
+```swift
+if let result = await tronWeb.unfreezeBalanceAsync(amount: 100, resourceType: "ENERGY", privateKey: "...") {
+    if let success = result["success"] as? Bool, success {
+        print("Unfreeze application submitted successfully")
+    }
+}
+
+---
+
+### 3.5 Fee Estimation
+
+#### Estimate TRX Transfer Fee
+```swift
+let toAddress = "T..."
+let amount: Double = 10.0
+let fromAddress = "T..."
+
+if let result = await tronWeb.estimateTrxFeeAsync(toAddress: toAddress, amount: amount, fromAddress: fromAddress) {
+    if let success = result["success"] as? Bool, success {
+        let feeTrx = result["feeTrx"] as? Double
+        print("Estimated fee: \(feeTrx ?? 0) TRX")
+    }
+}
+```
+
+#### Estimate TRC20 Transfer Fee
+```swift
+let contract = "T..."
+let toAddress = "T..."
+let amount: Double = 100.0
+let fromAddress = "T..."
+
+if let result = await tronWeb.estimateTrc20FeeAsync(contractAddress: contract, toAddress: toAddress, amount: amount, fromAddress: fromAddress) {
+    if let success = result["success"] as? Bool, success {
+        let feeTrx = result["feeTrx"] as? Double
+        print("Estimated fee: \(feeTrx ?? 0) TRX")
+    }
+}
+```
+
+#### Estimate Multi-Sig TRX Transfer Fee
+```swift
+let fromAddress = "T..."
+let toAddress = "T..."
+let amount: Double = 10.0
+let privateKeysCount = 2 // Number of required signatures
+let permissionId = 2
+
+if let result = await tronWeb.estimateMultiSigTrxFeeAsync(
+    fromAddress: fromAddress,
+    toAddress: toAddress,
+    amount: amount,
+    privateKeysCount: privateKeysCount,
+    permissionId: permissionId
+) {
+    if let success = result["success"] as? Bool, success {
+        let feeTrx = result["feeTrx"] as? Double
+        print("Estimated multi-sig TRX fee: \(feeTrx ?? 0) TRX")
+    }
+}
+```
+
+#### Estimate Multi-Sig TRC20 Transfer Fee
+```swift
+let contractAddress = "T..."
+let fromAddress = "T..."
+let toAddress = "T..."
+let amount: Double = 100.0
+let privateKeysCount = 2
+let permissionId = 2
+
+if let result = await tronWeb.estimateMultiSigTrc20FeeAsync(
+    contractAddress: contractAddress,
+    fromAddress: fromAddress,
+    toAddress: toAddress,
+    amount: amount,
+    privateKeysCount: privateKeysCount,
+    permissionId: permissionId
+) {
+    if let success = result["success"] as? Bool, success {
+        let feeTrx = result["feeTrx"] as? Double
+        print("Estimated multi-sig TRC20 fee: \(feeTrx ?? 0) TRX")
+    }
+}
+```
 ## License
 
 TronWeb is released under the MIT license. [See LICENSE](https://github.com/james19870606/TronWeb/blob/master/LICENSE) for details .
