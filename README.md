@@ -13,7 +13,7 @@ The Swift Package Manager  is a tool for automating the distribution of Swift co
 
 ```ruby
 dependencies: [
-    .package(url: "https://github.com/james19870606/TronWeb.git", .upToNextMajor(from: "1.2.0"))
+    .package(url: "https://github.com/james19870606/TronWeb.git", .upToNextMajor(from: "1.2.1"))
 ]
 ```
 ## 1. Usage in Swift Package Manager
