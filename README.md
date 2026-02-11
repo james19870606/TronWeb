@@ -13,7 +13,7 @@ The Swift Package Manager  is a tool for automating the distribution of Swift co
 
 ```ruby
 dependencies: [
-    .package(url: "https://github.com/james19870606/TronWeb.git", .upToNextMajor(from: "1.2.1"))
+    .package(url: "https://github.com/james19870606/TronWeb.git", .upToNextMajor(from: "1.2.2"))
 ]
 ```
 ## 1. Usage in Swift Package Manager
@@ -89,8 +89,8 @@ if let result = await tronWeb.getTRXBalanceAsync(address: "T...") {
 let toAddress = "T..."
 let amount: Double = 1.5 // 1.5 TRX
 let privateKey = "..."
-
-if let result = await tronWeb.trxTransferAsync(toAddress: toAddress, amount: amount, privateKey: privateKey) {
+let remark = ""
+if let result = await tronWeb.trxTransferAsync(toAddress: toAddress, amount: amount, privateKey: privateKey,remark: remark) {
     if let success = result["success"] as? Bool, success {
         let txid = result["txid"] as? String
         print("Transfer successful, TXID: \(txid ?? "")")
@@ -107,8 +107,8 @@ let contract = "T..." // Token contract address (e.g., USDT)
 let toAddress = "T..."
 let amount: Double = 100.0 
 let privateKey = "..."
-
-if let result = await tronWeb.trc20TransferAsync(contractAddress: contract, toAddress: toAddress, amount: amount, privateKey: privateKey) {
+let remark = ""
+if let result = await tronWeb.trc20TransferAsync(contractAddress: contract, toAddress: toAddress, amount: amount, privateKey: privateKey,remark: remark) {
     if let success = result["success"] as? Bool, success {
         let txid = result["txid"] as? String
         print("Token transfer successful, TXID: \(txid ?? "")")
@@ -145,13 +145,14 @@ if let result = await tronWeb.createMultiSigAddressAsync(
 let fromAddress = "T..." // Multi-sig account address
 let privateKeys = ["pk1", "pk2"] // List of private keys meeting the threshold
 let permissionId = 2 // Active Permission ID
-
+let remark = ""
 if let result = await tronWeb.multiSigTrxTransferAsync(
     fromAddress: fromAddress,
     toAddress: "T...",
     amount: 10.0,
     privateKeys: privateKeys,
-    permissionId: permissionId
+    permissionId: permissionId,
+    remark: remark
 ) {
     if let success = result["success"] as? Bool, success {
         print("Multi-sig transfer successful")
@@ -167,14 +168,15 @@ let toAddress = "T..."
 let amount: Double = 100.0   // Transfer amount
 let privateKeys = ["pk1", "pk2"] // List of private keys meeting the threshold
 let permissionId = 2         // Active Permission ID
-
+let remark = ""
 if let result = await tronWeb.multiSigTrc20TransferAsync(
     contractAddress: contractAddress,
     fromAddress: fromAddress,
     toAddress: toAddress,
     amount: amount,
     privateKeys: privateKeys,
-    permissionId: permissionId
+    permissionId: permissionId,
+    remark: remark
 ) {
     if let success = result["success"] as? Bool, success {
         let txid = result["txid"] as? String

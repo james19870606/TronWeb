@@ -1,6 +1,6 @@
 import UIKit
 import SnapKit
-
+import TronWeb
 class GetAccountResourcesViewController: UIViewController {
 
     // MARK: - Properties 

@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 import SafariServices
-
+import TronWeb
 class MultiSigTRXTransferViewController: UIViewController {
 
     // MARK: - Properties 

@@ -1,6 +1,6 @@
 import UIKit
 import SnapKit
-
+import TronWeb
 class CreateRandomWalletViewController: UIViewController {
     
     // MARK: - Properties
