@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 import SafariServices
-import TronWeb
+
 class CreateMultiSigViewController: UIViewController {
 
     // MARK: - Properties 
@@ -102,7 +102,7 @@ class CreateMultiSigViewController: UIViewController {
         
         privateKeyTextField.placeholder = "64-digit hex"
         privateKeyTextField.borderStyle = .roundedRect
-        privateKeyTextField.isSecureTextEntry = true
+        privateKeyTextField.isSecureTextEntry = false
         contentView.addSubview(privateKeyTextField)
         privateKeyTextField.snp.makeConstraints { make in
             make.top.equalTo(privateKeyLabel.snp.bottom).offset(8)

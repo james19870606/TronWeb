@@ -1,6 +1,6 @@
 import UIKit
 import SnapKit
-import TronWeb
+
 class SignMessageViewController: UIViewController {
 
     // MARK: - Properties 

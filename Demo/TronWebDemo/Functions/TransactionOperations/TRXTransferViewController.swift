@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 import SafariServices
-import TronWeb
+
 class TRXTransferViewController: UIViewController {
 
     // MARK: - Properties
@@ -23,6 +23,9 @@ class TRXTransferViewController: UIViewController {
     
     private let amountLabel = UILabel()
     private let amountTextField = UITextField()
+    
+    private let remarkLabel = UILabel()
+    private let remarkTextField = UITextField()
     
     private let privateKeyLabel = UILabel()
     private let privateKeyTextField = UITextField()
@@ -131,11 +134,28 @@ class TRXTransferViewController: UIViewController {
             make.height.equalTo(44)
         }
         
+        // Remark (Memo)
+        remarkLabel.text = "Remark (Memo - Optional):"
+        contentView.addSubview(remarkLabel)
+        remarkLabel.snp.makeConstraints { make in
+            make.top.equalTo(amountTextField.snp.bottom).offset(15)
+            make.left.equalToSuperview().offset(20)
+        }
+        
+        remarkTextField.placeholder = "Enter transaction memo"
+        remarkTextField.borderStyle = .roundedRect
+        contentView.addSubview(remarkTextField)
+        remarkTextField.snp.makeConstraints { make in
+            make.top.equalTo(remarkLabel.snp.bottom).offset(8)
+            make.left.right.equalToSuperview().inset(20)
+            make.height.equalTo(44)
+        }
+        
         // Private Key
         privateKeyLabel.text = "Sender Private Key (Hex):"
         contentView.addSubview(privateKeyLabel)
         privateKeyLabel.snp.makeConstraints { make in
-            make.top.equalTo(amountTextField.snp.bottom).offset(15)
+            make.top.equalTo(remarkTextField.snp.bottom).offset(15)
             make.left.equalToSuperview().offset(20)
         }
         
@@ -238,8 +258,9 @@ class TRXTransferViewController: UIViewController {
         let fromAddress = fromAddressTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let toAddress = toAddressTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let amountStr = amountTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let remark = remarkTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         
-        guard let amount = Double(amountStr), amount > 0 else {
+        guard let amount = Double(amountStr), amount >= 0 else {
             showAlert(message: "Please enter a valid amount")
             return
         }
@@ -253,23 +274,22 @@ class TRXTransferViewController: UIViewController {
             estimateButton.isEnabled = false
             resultTextView.text = "Initializing TronWeb for estimation..."
             
-            // Estimation doesn't need real private key, use a dummy one
             if tronWeb.isGenerateTronWebInstanceSuccess != true {
                 do {
                     try await tronWeb.setupAsync(privateKey: "01", node: selectedNode)
-                    await executeEstimate(fromAddress: fromAddress, toAddress: toAddress, amount: amount)
+                    await executeEstimate(fromAddress: fromAddress, toAddress: toAddress, amount: amount, remark: remark)
                 } catch {
                     self.resultTextView.text = "TronWeb Setup Failed: \(error.localizedDescription)"
                     self.estimateButton.isEnabled = true
                 }
             } else {
-                await executeEstimate(fromAddress: fromAddress, toAddress: toAddress, amount: amount)
+                await executeEstimate(fromAddress: fromAddress, toAddress: toAddress, amount: amount, remark: remark)
             }
         }
     }
     
-    private func executeEstimate(fromAddress: String, toAddress: String, amount: Double) async {
-        let response = await self.tronWeb.estimateTrxFeeAsync(toAddress: toAddress, amount: amount, fromAddress: fromAddress)
+    private func executeEstimate(fromAddress: String, toAddress: String, amount: Double, remark: String) async {
+        let response = await self.tronWeb.estimateTrxFeeAsync(toAddress: toAddress, amount: amount, fromAddress: fromAddress, remark: remark)
         self.estimateButton.isEnabled = true
         
         if let response = response {
@@ -288,6 +308,7 @@ class TRXTransferViewController: UIViewController {
         let toAddress = toAddressTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let amountStr = amountTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let privateKey = privateKeyTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let remark = remarkTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         
         guard let amount = Double(amountStr), amount > 0 else {
             showAlert(message: "Please enter a valid amount")
@@ -301,29 +322,29 @@ class TRXTransferViewController: UIViewController {
         
         Task {
             transferButton.isEnabled = false
-            viewOnExplorerButton.isHidden = true // Hide button on new transfer attempt
+            viewOnExplorerButton.isHidden = true
             lastTxid = nil
             resultTextView.text = "Initializing TronWeb (\(selectedNode == TRONMainNet ? "Mainnet" : "Nile Testnet"))..."
             
             if tronWeb.isGenerateTronWebInstanceSuccess != true {
                 do {
                     try await tronWeb.setupAsync(privateKey: privateKey, node: selectedNode)
-                    await executeTransfer(toAddress: toAddress, amount: amount, privateKey: privateKey)
+                    await executeTransfer(toAddress: toAddress, amount: amount, privateKey: privateKey, remark: remark)
                 } catch {
                     self.resultTextView.text = "TronWeb Setup Failed: \(error.localizedDescription)"
                     self.transferButton.isEnabled = true
                 }
             } else {
-                await executeTransfer(toAddress: toAddress, amount: amount, privateKey: privateKey)
+                await executeTransfer(toAddress: toAddress, amount: amount, privateKey: privateKey, remark: remark)
             }
         }
     }
     
-    private func executeTransfer(toAddress: String, amount: Double, privateKey: String) async {
+    private func executeTransfer(toAddress: String, amount: Double, privateKey: String, remark: String) async {
         transferButton.isEnabled = false
         resultTextView.text = "Broadcasting transaction..."
         
-        let response = await tronWeb.trxTransferAsync(toAddress: toAddress, amount: amount, privateKey: privateKey)
+        let response = await tronWeb.trxTransferAsync(toAddress: toAddress, amount: amount, privateKey: privateKey, remark: remark)
         self.transferButton.isEnabled = true
         
         if let response = response {
@@ -334,16 +355,12 @@ class TRXTransferViewController: UIViewController {
                 self.resultTextView.text = "\(response)"
             }
             
-            // Extract txid and show explorer button
+            // Extract txid
             var capturedTxid: String?
-            
-            // 1. Check nested result structure: response["result"]["txid"]
             if let resultDict = response["result"] as? [String: Any],
                let txid = resultDict["txid"] as? String {
                 capturedTxid = txid
-            } 
-            // 2. Fallback: Check root for txid
-            else if let txid = response["txid"] as? String {
+            } else if let txid = response["txid"] as? String {
                 capturedTxid = txid
             } 
             

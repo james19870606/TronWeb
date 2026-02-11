@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 import SafariServices
-import TronWeb
+
 class TRC20TransferViewController: UIViewController {
 
     // MARK: - Properties
@@ -26,6 +26,9 @@ class TRC20TransferViewController: UIViewController {
     
     private let amountLabel = UILabel()
     private let amountTextField = UITextField()
+    
+    private let remarkLabel = UILabel()
+    private let remarkTextField = UITextField()
     
     private let privateKeyLabel = UILabel()
     private let privateKeyTextField = UITextField()
@@ -154,11 +157,28 @@ class TRC20TransferViewController: UIViewController {
             make.height.equalTo(44)
         }
         
+        // Remark (Memo)
+        remarkLabel.text = "Remark (Memo - Optional):"
+        contentView.addSubview(remarkLabel)
+        remarkLabel.snp.makeConstraints { make in
+            make.top.equalTo(amountTextField.snp.bottom).offset(15)
+            make.left.equalToSuperview().offset(20)
+        }
+        
+        remarkTextField.placeholder = "Enter transaction memo"
+        remarkTextField.borderStyle = .roundedRect
+        contentView.addSubview(remarkTextField)
+        remarkTextField.snp.makeConstraints { make in
+            make.top.equalTo(remarkLabel.snp.bottom).offset(8)
+            make.left.right.equalToSuperview().inset(20)
+            make.height.equalTo(44)
+        }
+        
         // Private Key
         privateKeyLabel.text = "Sender Private Key (Hex):"
         contentView.addSubview(privateKeyLabel)
         privateKeyLabel.snp.makeConstraints { make in
-            make.top.equalTo(amountTextField.snp.bottom).offset(15)
+            make.top.equalTo(remarkTextField.snp.bottom).offset(15)
             make.left.equalToSuperview().offset(20)
         }
         
@@ -262,8 +282,9 @@ class TRC20TransferViewController: UIViewController {
         let fromAddress = fromAddressTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let toAddress = toAddressTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let amountStr = amountTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let remark = remarkTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         
-        guard let amount = Double(amountStr), amount > 0 else {
+        guard let amount = Double(amountStr), amount >= 0 else {
             showAlert(message: "Please enter a valid amount")
             return
         }
@@ -280,19 +301,19 @@ class TRC20TransferViewController: UIViewController {
             if tronWeb.isGenerateTronWebInstanceSuccess != true {
                 do {
                     try await tronWeb.setupAsync(privateKey: "01", node: selectedNode)
-                    await executeEstimate(contract: contract, fromAddress: fromAddress, toAddress: toAddress, amount: amount)
+                    await executeEstimate(contract: contract, fromAddress: fromAddress, toAddress: toAddress, amount: amount, remark: remark)
                 } catch {
                     self.resultTextView.text = "TronWeb Setup Failed: \(error.localizedDescription)"
                     self.estimateButton.isEnabled = true
                 }
             } else {
-                await executeEstimate(contract: contract, fromAddress: fromAddress, toAddress: toAddress, amount: amount)
+                await executeEstimate(contract: contract, fromAddress: fromAddress, toAddress: toAddress, amount: amount, remark: remark)
             }
         }
     }
     
-    private func executeEstimate(contract: String, fromAddress: String, toAddress: String, amount: Double) async {
-        let response = await self.tronWeb.estimateTrc20FeeAsync(contractAddress: contract, toAddress: toAddress, amount: amount, fromAddress: fromAddress)
+    private func executeEstimate(contract: String, fromAddress: String, toAddress: String, amount: Double, remark: String) async {
+        let response = await self.tronWeb.estimateTrc20FeeAsync(contractAddress: contract, toAddress: toAddress, amount: amount, fromAddress: fromAddress, remark: remark)
         self.estimateButton.isEnabled = true
         
         if let response = response {
@@ -311,6 +332,7 @@ class TRC20TransferViewController: UIViewController {
         let toAddress = toAddressTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let amountStr = amountTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let privateKey = privateKeyTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let remark = remarkTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         
         guard let amount = Double(amountStr), amount > 0 else {
             showAlert(message: "Please enter a valid amount")
@@ -324,7 +346,7 @@ class TRC20TransferViewController: UIViewController {
         
         Task {
             transferButton.isEnabled = false
-            viewOnExplorerButton.isHidden = true // Hide button on new transfer attempt
+            viewOnExplorerButton.isHidden = true
             lastTxid = nil
             resultTextView.text = "Initializing TronWeb (\(selectedNode == TRONMainNet ? "Mainnet" : "Nile Testnet"))..."
             
@@ -332,17 +354,17 @@ class TRC20TransferViewController: UIViewController {
                 do {
                     try await tronWeb.setupAsync(privateKey: privateKey, node: selectedNode)
                     let contract = self.contractTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-                    await executeTransfer(contract: contract, toAddress: toAddress, amount: amount, privateKey: privateKey)
+                    await executeTransfer(contract: contract, toAddress: toAddress, amount: amount, privateKey: privateKey, remark: remark)
                 } catch {
                     self.resultTextView.text = "TronWeb Setup Failed: \(error.localizedDescription)"
                     self.transferButton.isEnabled = true
                 }
             } else {
-                // Ensure setup matches current private key even if already successful
+                // Ensure setup matches current private key
                 do {
                     try await tronWeb.setupAsync(privateKey: privateKey, node: selectedNode)
                     let contract = self.contractTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-                    await executeTransfer(contract: contract, toAddress: toAddress, amount: amount, privateKey: privateKey)
+                    await executeTransfer(contract: contract, toAddress: toAddress, amount: amount, privateKey: privateKey, remark: remark)
                 } catch {
                     self.resultTextView.text = "TronWeb Setup Failed: \(error.localizedDescription)"
                     self.transferButton.isEnabled = true
@@ -351,11 +373,11 @@ class TRC20TransferViewController: UIViewController {
         }
     }
     
-    private func executeTransfer(contract: String, toAddress: String, amount: Double, privateKey: String) async {
+    private func executeTransfer(contract: String, toAddress: String, amount: Double, privateKey: String, remark: String) async {
         transferButton.isEnabled = false
         resultTextView.text = "Broadcasting TRC20 transaction..."
         
-        let response = await tronWeb.trc20TransferAsync(contractAddress: contract, toAddress: toAddress, amount: amount, privateKey: privateKey)
+        let response = await tronWeb.trc20TransferAsync(contractAddress: contract, toAddress: toAddress, amount: amount, privateKey: privateKey, remark: remark)
         self.transferButton.isEnabled = true
         
         if let response = response {
@@ -366,16 +388,12 @@ class TRC20TransferViewController: UIViewController {
                 self.resultTextView.text = "\(response)"
             }
             
-            // Extract txid and show explorer button
+            // Extract txid
             var capturedTxid: String?
-            
-            // 1. Check nested result structure: response["result"]["txid"]
             if let resultDict = response["result"] as? [String: Any],
                let txid = resultDict["txid"] as? String {
                 capturedTxid = txid
-            } 
-            // 2. Fallback: Check root for txid
-            else if let txid = response["txid"] as? String {
+            } else if let txid = response["txid"] as? String {
                 capturedTxid = txid
             } 
             

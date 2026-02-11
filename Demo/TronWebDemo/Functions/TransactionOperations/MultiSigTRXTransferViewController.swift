@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 import SafariServices
-import TronWeb
+
 class MultiSigTRXTransferViewController: UIViewController {
 
     // MARK: - Properties 
@@ -23,6 +23,9 @@ class MultiSigTRXTransferViewController: UIViewController {
     
     private let amountLabel = UILabel()
     private let amountTextField = UITextField()
+    
+    private let remarkLabel = UILabel()
+    private let remarkTextField = UITextField()
     
     private let privateKeysLabel = UILabel()
     private let privateKeysTextView = UITextView()
@@ -135,11 +138,28 @@ class MultiSigTRXTransferViewController: UIViewController {
             make.height.equalTo(44)
         }
         
+        // Remark (Memo)
+        remarkLabel.text = "Remark (Memo - Optional):"
+        contentView.addSubview(remarkLabel)
+        remarkLabel.snp.makeConstraints { make in
+            make.top.equalTo(amountTextField.snp.bottom).offset(15)
+            make.left.equalToSuperview().offset(20)
+        }
+        
+        remarkTextField.placeholder = "Enter transaction memo"
+        remarkTextField.borderStyle = .roundedRect
+        contentView.addSubview(remarkTextField)
+        remarkTextField.snp.makeConstraints { make in
+            make.top.equalTo(remarkLabel.snp.bottom).offset(8)
+            make.left.right.equalToSuperview().inset(20)
+            make.height.equalTo(44)
+        }
+        
         // Private Keys
         privateKeysLabel.text = "Signer Private Keys (One per line):"
         contentView.addSubview(privateKeysLabel)
         privateKeysLabel.snp.makeConstraints { make in
-            make.top.equalTo(amountTextField.snp.bottom).offset(15)
+            make.top.equalTo(remarkTextField.snp.bottom).offset(15)
             make.left.equalToSuperview().offset(20)
         }
         
@@ -275,10 +295,11 @@ class MultiSigTRXTransferViewController: UIViewController {
         let fromAddress = fromAddressTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let toAddress = toAddressTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let amountStr = amountTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let remark = remarkTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let privateKeysCount = getPrivateKeys().count
         let permissionId = Int(permissionIdTextField.text ?? "") ?? 2
         
-        guard let amount = Double(amountStr), amount > 0 else {
+        guard let amount = Double(amountStr), amount >= 0 else {
             showAlert(message: "Please enter a valid amount")
             return
         }
@@ -295,19 +316,19 @@ class MultiSigTRXTransferViewController: UIViewController {
             if tronWeb.isGenerateTronWebInstanceSuccess != true {
                 do {
                     try await tronWeb.setupAsync(privateKey: "01", node: selectedNode)
-                    await executeEstimate(fromAddress: fromAddress, toAddress: toAddress, amount: amount, privateKeysCount: privateKeysCount, permissionId: permissionId)
+                    await executeEstimate(fromAddress: fromAddress, toAddress: toAddress, amount: amount, privateKeysCount: privateKeysCount, permissionId: permissionId, remark: remark)
                 } catch {
                     self.resultTextView.text = "TronWeb Setup Failed: \(error.localizedDescription)"
                     self.estimateButton.isEnabled = true
                 }
             } else {
-                await executeEstimate(fromAddress: fromAddress, toAddress: toAddress, amount: amount, privateKeysCount: privateKeysCount, permissionId: permissionId)
+                await executeEstimate(fromAddress: fromAddress, toAddress: toAddress, amount: amount, privateKeysCount: privateKeysCount, permissionId: permissionId, remark: remark)
             }
         }
     }
     
-    private func executeEstimate(fromAddress: String, toAddress: String, amount: Double, privateKeysCount: Int, permissionId: Int) async {
-        let response = await self.tronWeb.estimateMultiSigTrxFeeAsync(fromAddress: fromAddress, toAddress: toAddress, amount: amount, privateKeysCount: privateKeysCount, permissionId: permissionId)
+    private func executeEstimate(fromAddress: String, toAddress: String, amount: Double, privateKeysCount: Int, permissionId: Int, remark: String) async {
+        let response = await self.tronWeb.estimateMultiSigTrxFeeAsync(fromAddress: fromAddress, toAddress: toAddress, amount: amount, privateKeysCount: privateKeysCount, permissionId: permissionId, remark: remark)
         self.estimateButton.isEnabled = true
         
         if let response = response {
@@ -326,6 +347,7 @@ class MultiSigTRXTransferViewController: UIViewController {
         let fromAddress = fromAddressTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let toAddress = toAddressTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let amountStr = amountTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let remark = remarkTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let privateKeys = getPrivateKeys()
         let permissionId = Int(permissionIdTextField.text ?? "") ?? 2
         
@@ -341,14 +363,14 @@ class MultiSigTRXTransferViewController: UIViewController {
         
         Task {
             transferButton.isEnabled = false
-            viewOnExplorerButton.isHidden = true // Hide button on new transfer attempt
+            viewOnExplorerButton.isHidden = true
             lastTxid = nil
             resultTextView.text = "Initializing TronWeb (\(selectedNode == TRONMainNet ? "Mainnet" : "Nile Testnet"))..."
             
             do {
                 // Use first private key for setup
                 try await tronWeb.setupAsync(privateKey: privateKeys[0], node: selectedNode)
-                await executeTransfer(fromAddress: fromAddress, toAddress: toAddress, amount: amount, privateKeys: privateKeys, permissionId: permissionId)
+                await executeTransfer(fromAddress: fromAddress, toAddress: toAddress, amount: amount, privateKeys: privateKeys, permissionId: permissionId, remark: remark)
             } catch {
                 self.resultTextView.text = "TronWeb Setup Failed: \(error.localizedDescription)"
                 self.transferButton.isEnabled = true
@@ -356,11 +378,11 @@ class MultiSigTRXTransferViewController: UIViewController {
         }
     }
     
-    private func executeTransfer(fromAddress: String, toAddress: String, amount: Double, privateKeys: [String], permissionId: Int) async {
+    private func executeTransfer(fromAddress: String, toAddress: String, amount: Double, privateKeys: [String], permissionId: Int, remark: String) async {
         transferButton.isEnabled = false
         resultTextView.text = "Broadcasting multi-sig transaction..."
         
-        let response = await tronWeb.multiSigTrxTransferAsync(fromAddress: fromAddress, toAddress: toAddress, amount: amount, privateKeys: privateKeys, permissionId: permissionId)
+        let response = await tronWeb.multiSigTrxTransferAsync(fromAddress: fromAddress, toAddress: toAddress, amount: amount, privateKeys: privateKeys, permissionId: permissionId, remark: remark)
         self.transferButton.isEnabled = true
         
         if let response = response {
@@ -371,16 +393,12 @@ class MultiSigTRXTransferViewController: UIViewController {
                 self.resultTextView.text = "\(response)"
             }
             
-            // Extract txid and show explorer button
+            // Extract txid
             var capturedTxid: String?
-            
-            // 1. Check nested result structure: response["result"]["txid"]
             if let resultDict = response["result"] as? [String: Any],
                let txid = resultDict["txid"] as? String {
                 capturedTxid = txid
-            } 
-            // 2. Fallback: Check root for txid
-            else if let txid = response["txid"] as? String {
+            } else if let txid = response["txid"] as? String {
                 capturedTxid = txid
             } 
             

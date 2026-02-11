@@ -317,180 +317,188 @@ public class TronWeb: NSObject {
     }
 
     // MARK: - Transaction Operations
-    public func trxTransfer(toAddress: String, amount: Double, privateKey: String, completion: @escaping ([String: Any]?) -> Void) {
-        let params = ["toAddress": toAddress, "amount": amount, "privateKey": privateKey] as [String : Any]
+    public func trxTransfer(toAddress: String, amount: Double, privateKey: String, remark: String? = nil, completion: @escaping ([String: Any]?) -> Void) {
+        var params: [String: Any] = ["toAddress": toAddress, "amount": amount, "privateKey": privateKey]
+        if let remark = remark { params["remark"] = remark }
         self.bridge.call(handlerName: "trxTransfer", data: params) { response in
             completion(response as? [String: Any])
         }
     }
 
     /// Async version of trxTransfer
-    public func trxTransferAsync(toAddress: String, amount: Double, privateKey: String) async -> [String: Any]? {
+    public func trxTransferAsync(toAddress: String, amount: Double, privateKey: String, remark: String? = nil) async -> [String: Any]? {
         await withCheckedContinuation { continuation in
             Task { @MainActor in
-                self.trxTransfer(toAddress: toAddress, amount: amount, privateKey: privateKey) { response in
+                self.trxTransfer(toAddress: toAddress, amount: amount, privateKey: privateKey, remark: remark) { response in
                     continuation.resume(returning: response)
                 }
             }
         }
     }
 
-    public func trc20Transfer(contractAddress: String, toAddress: String, amount: Double, privateKey: String, completion: @escaping ([String: Any]?) -> Void) {
-        let params = [
+    public func trc20Transfer(contractAddress: String, toAddress: String, amount: Double, privateKey: String, remark: String? = nil, completion: @escaping ([String: Any]?) -> Void) {
+        var params: [String: Any] = [
             "contractAddress": contractAddress,
             "toAddress": toAddress,
             "amount": amount,
             "privateKey": privateKey
-        ] as [String : Any]
+        ]
+        if let remark = remark { params["remark"] = remark }
         self.bridge.call(handlerName: "trc20Transfer", data: params) { response in
             completion(response as? [String: Any])
         }
     }
 
     /// Async version of trc20Transfer
-    public func trc20TransferAsync(contractAddress: String, toAddress: String, amount: Double, privateKey: String) async -> [String: Any]? {
+    public func trc20TransferAsync(contractAddress: String, toAddress: String, amount: Double, privateKey: String, remark: String? = nil) async -> [String: Any]? {
         await withCheckedContinuation { continuation in
             Task { @MainActor in
-                self.trc20Transfer(contractAddress: contractAddress, toAddress: toAddress, amount: amount, privateKey: privateKey) { response in
+                self.trc20Transfer(contractAddress: contractAddress, toAddress: toAddress, amount: amount, privateKey: privateKey, remark: remark) { response in
                     continuation.resume(returning: response)
                 }
             }
         }
     }
 
-    public func estimateTrxFee(toAddress: String, amount: Double, fromAddress: String, completion: @escaping ([String: Any]?) -> Void) {
-        let params = ["toAddress": toAddress, "amount": amount, "fromAddress": fromAddress] as [String : Any]
+    public func estimateTrxFee(toAddress: String, amount: Double, fromAddress: String, remark: String? = nil, completion: @escaping ([String: Any]?) -> Void) {
+        var params: [String: Any] = ["toAddress": toAddress, "amount": amount, "fromAddress": fromAddress]
+        if let remark = remark { params["remark"] = remark }
         self.bridge.call(handlerName: "estimateTrxFee", data: params) { response in
             completion(response as? [String: Any])
         }
     }
 
     /// Async version of estimateTrxFee
-    public func estimateTrxFeeAsync(toAddress: String, amount: Double, fromAddress: String) async -> [String: Any]? {
+    public func estimateTrxFeeAsync(toAddress: String, amount: Double, fromAddress: String, remark: String? = nil) async -> [String: Any]? {
         await withCheckedContinuation { continuation in
             Task { @MainActor in
-                self.estimateTrxFee(toAddress: toAddress, amount: amount, fromAddress: fromAddress) { response in
+                self.estimateTrxFee(toAddress: toAddress, amount: amount, fromAddress: fromAddress, remark: remark) { response in
                     continuation.resume(returning: response)
                 }
             }
         }
     }
 
-    public func estimateTrc20Fee(contractAddress: String, toAddress: String, amount: Double, fromAddress: String, completion: @escaping ([String: Any]?) -> Void) {
-        let params = [
+    public func estimateTrc20Fee(contractAddress: String, toAddress: String, amount: Double, fromAddress: String, remark: String? = nil, completion: @escaping ([String: Any]?) -> Void) {
+        var params: [String: Any] = [
             "contractAddress": contractAddress,
             "toAddress": toAddress,
             "amount": amount,
             "fromAddress": fromAddress
-        ] as [String : Any]
+        ]
+        if let remark = remark { params["remark"] = remark }
         self.bridge.call(handlerName: "estimateTrc20Fee", data: params) { response in
             completion(response as? [String: Any])
         }
     }
 
     /// Async version of estimateTrc20Fee
-    public func estimateTrc20FeeAsync(contractAddress: String, toAddress: String, amount: Double, fromAddress: String) async -> [String: Any]? {
+    public func estimateTrc20FeeAsync(contractAddress: String, toAddress: String, amount: Double, fromAddress: String, remark: String? = nil) async -> [String: Any]? {
         await withCheckedContinuation { continuation in
             Task { @MainActor in
-                self.estimateTrc20Fee(contractAddress: contractAddress, toAddress: toAddress, amount: amount, fromAddress: fromAddress) { response in
+                self.estimateTrc20Fee(contractAddress: contractAddress, toAddress: toAddress, amount: amount, fromAddress: fromAddress, remark: remark) { response in
                     continuation.resume(returning: response)
                 }
             }
         }
     }
 
-    public func multiSigTrxTransfer(fromAddress: String, toAddress: String, amount: Double, privateKeys: [String], permissionId: Int = 2, completion: @escaping ([String: Any]?) -> Void) {
-        let params = [
+    public func multiSigTrxTransfer(fromAddress: String, toAddress: String, amount: Double, privateKeys: [String], permissionId: Int = 2, remark: String? = nil, completion: @escaping ([String: Any]?) -> Void) {
+        var params: [String: Any] = [
             "fromAddress": fromAddress,
             "toAddress": toAddress,
             "amount": amount,
             "privateKeys": privateKeys,
             "permissionId": permissionId
-        ] as [String : Any]
+        ]
+        if let remark = remark { params["remark"] = remark }
         self.bridge.call(handlerName: "multiSigTrxTransfer", data: params) { response in
             completion(response as? [String: Any])
         }
     }
 
     /// Async version of multiSigTrxTransfer
-    public func multiSigTrxTransferAsync(fromAddress: String, toAddress: String, amount: Double, privateKeys: [String], permissionId: Int = 2) async -> [String: Any]? {
+    public func multiSigTrxTransferAsync(fromAddress: String, toAddress: String, amount: Double, privateKeys: [String], permissionId: Int = 2, remark: String? = nil) async -> [String: Any]? {
         await withCheckedContinuation { continuation in
             Task { @MainActor in
-                self.multiSigTrxTransfer(fromAddress: fromAddress, toAddress: toAddress, amount: amount, privateKeys: privateKeys, permissionId: permissionId) { response in
+                self.multiSigTrxTransfer(fromAddress: fromAddress, toAddress: toAddress, amount: amount, privateKeys: privateKeys, permissionId: permissionId, remark: remark) { response in
                     continuation.resume(returning: response)
                 }
             }
         }
     }
 
-    public func estimateMultiSigTrxFee(fromAddress: String, toAddress: String, amount: Double, privateKeysCount: Int, permissionId: Int = 2, completion: @escaping ([String: Any]?) -> Void) {
-        let params = [
+    public func estimateMultiSigTrxFee(fromAddress: String, toAddress: String, amount: Double, privateKeysCount: Int, permissionId: Int = 2, remark: String? = nil, completion: @escaping ([String: Any]?) -> Void) {
+        var params: [String: Any] = [
             "fromAddress": fromAddress,
             "toAddress": toAddress,
             "amount": amount,
             "privateKeysCount": privateKeysCount,
             "permissionId": permissionId
-        ] as [String : Any]
+        ]
+        if let remark = remark { params["remark"] = remark }
         self.bridge.call(handlerName: "estimateMultiSigTrxFee", data: params) { response in
             completion(response as? [String: Any])
         }
     }
 
     /// Async version of estimateMultiSigTrxFee
-    public func estimateMultiSigTrxFeeAsync(fromAddress: String, toAddress: String, amount: Double, privateKeysCount: Int, permissionId: Int = 2) async -> [String: Any]? {
+    public func estimateMultiSigTrxFeeAsync(fromAddress: String, toAddress: String, amount: Double, privateKeysCount: Int, permissionId: Int = 2, remark: String? = nil) async -> [String: Any]? {
         await withCheckedContinuation { continuation in
             Task { @MainActor in
-                self.estimateMultiSigTrxFee(fromAddress: fromAddress, toAddress: toAddress, amount: amount, privateKeysCount: privateKeysCount, permissionId: permissionId) { response in
+                self.estimateMultiSigTrxFee(fromAddress: fromAddress, toAddress: toAddress, amount: amount, privateKeysCount: privateKeysCount, permissionId: permissionId, remark: remark) { response in
                     continuation.resume(returning: response)
                 }
             }
         }
     }
 
-    public func multiSigTrc20Transfer(contractAddress: String, fromAddress: String, toAddress: String, amount: Double, privateKeys: [String], permissionId: Int = 2, completion: @escaping ([String: Any]?) -> Void) {
-        let params = [
+    public func multiSigTrc20Transfer(contractAddress: String, fromAddress: String, toAddress: String, amount: Double, privateKeys: [String], permissionId: Int = 2, remark: String? = nil, completion: @escaping ([String: Any]?) -> Void) {
+        var params: [String: Any] = [
             "contractAddress": contractAddress,
             "fromAddress": fromAddress,
             "toAddress": toAddress,
             "amount": amount,
             "privateKeys": privateKeys,
             "permissionId": permissionId
-        ] as [String : Any]
+        ]
+        if let remark = remark { params["remark"] = remark }
         self.bridge.call(handlerName: "multiSigTrc20Transfer", data: params) { response in
             completion(response as? [String: Any])
         }
     }
 
     /// Async version of multiSigTrc20Transfer
-    public func multiSigTrc20TransferAsync(contractAddress: String, fromAddress: String, toAddress: String, amount: Double, privateKeys: [String], permissionId: Int = 2) async -> [String: Any]? {
+    public func multiSigTrc20TransferAsync(contractAddress: String, fromAddress: String, toAddress: String, amount: Double, privateKeys: [String], permissionId: Int = 2, remark: String? = nil) async -> [String: Any]? {
         await withCheckedContinuation { continuation in
             Task { @MainActor in
-                self.multiSigTrc20Transfer(contractAddress: contractAddress, fromAddress: fromAddress, toAddress: toAddress, amount: amount, privateKeys: privateKeys, permissionId: permissionId) { response in
+                self.multiSigTrc20Transfer(contractAddress: contractAddress, fromAddress: fromAddress, toAddress: toAddress, amount: amount, privateKeys: privateKeys, permissionId: permissionId, remark: remark) { response in
                     continuation.resume(returning: response)
                 }
             }
         }
     }
 
-    public func estimateMultiSigTrc20Fee(contractAddress: String, fromAddress: String, toAddress: String, amount: Double, privateKeysCount: Int, permissionId: Int = 2, completion: @escaping ([String: Any]?) -> Void) {
-        let params = [
+    public func estimateMultiSigTrc20Fee(contractAddress: String, fromAddress: String, toAddress: String, amount: Double, privateKeysCount: Int, permissionId: Int = 2, remark: String? = nil, completion: @escaping ([String: Any]?) -> Void) {
+        var params: [String: Any] = [
             "contractAddress": contractAddress,
             "fromAddress": fromAddress,
             "toAddress": toAddress,
             "amount": amount,
             "privateKeysCount": privateKeysCount,
             "permissionId": permissionId
-        ] as [String : Any]
+        ]
+        if let remark = remark { params["remark"] = remark }
         self.bridge.call(handlerName: "estimateMultiSigTrc20Fee", data: params) { response in
             completion(response as? [String: Any])
         }
     }
 
     /// Async version of estimateMultiSigTrc20Fee
-    public func estimateMultiSigTrc20FeeAsync(contractAddress: String, fromAddress: String, toAddress: String, amount: Double, privateKeysCount: Int, permissionId: Int = 2) async -> [String: Any]? {
+    public func estimateMultiSigTrc20FeeAsync(contractAddress: String, fromAddress: String, toAddress: String, amount: Double, privateKeysCount: Int, permissionId: Int = 2, remark: String? = nil) async -> [String: Any]? {
         await withCheckedContinuation { continuation in
             Task { @MainActor in
-                self.estimateMultiSigTrc20Fee(contractAddress: contractAddress, fromAddress: fromAddress, toAddress: toAddress, amount: amount, privateKeysCount: privateKeysCount, permissionId: permissionId) { response in
+                self.estimateMultiSigTrc20Fee(contractAddress: contractAddress, fromAddress: fromAddress, toAddress: toAddress, amount: amount, privateKeysCount: privateKeysCount, permissionId: permissionId, remark: remark) { response in
                     continuation.resume(returning: response)
                 }
             }
